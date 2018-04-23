@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Font?>
+<?import java.net.URL?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="sample.Controller.Login_Register_Controller">
+    <children>
+        <VBox alignment="CENTER" prefHeight="500.0" prefWidth="400.0" styleClass="sidebar">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Logo/logo-white.png" />
+                    </image>
+                </ImageView>
+                <Label alignment="CENTER" prefHeight="148.0" prefWidth="444.0" text="EXCURSION BOOKING SYSTEM" textAlignment="CENTER" textFill="WHITE">
+                    <font>
+                        <Font name="Ebrima Bold" size="23.0" />
+                    </font>
+                </Label>
+            </children>
+            <stylesheets>
+                <URL value="@../Style/stylesheet.css" />
+            </stylesheets>
+        </VBox>
+        <PasswordField fx:id="Login_Password" layoutX="447.0" layoutY="250.0" prefHeight="50.0" prefWidth="325.0" promptText="Password" />
+        <TextField fx:id="Login_Username" layoutX="447.0" layoutY="182.0" prefHeight="50.0" prefWidth="325.0" promptText="Username" />
+        <Button fx:id="Login_Button" layoutX="535.0" layoutY="314.0" mnemonicParsing="false" onAction="#LoginButtonClicked" prefHeight="60.0" prefWidth="150.0" styleClass="loginbtn" text="Login">
+            <stylesheets>
+                <URL value="@../Style/stylesheet.css" />
+            </stylesheets></Button>
+        <Label layoutX="409.0" layoutY="38.0" text="WELCOME" textFill="#757373">
+            <font>
+                <Font size="47.0" />
+            </font>
+        </Label>
+        <Label layoutX="409.0" layoutY="107.0" text="Sign In to Continue" textFill="#aba9a9">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <Label layoutX="538.0" layoutY="389.0" onMouseClicked="#login_registerButton" styleClass="signupbtn" stylesheets="@../Style/stylesheet.css" text="Create an account">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <MaterialDesignIconView fill="#686666" glyphName="CLOSE" layoutX="771.0" layoutY="26.0" onMouseClicked="#Close_App" size="30" />
+    </children>
+</AnchorPane>
