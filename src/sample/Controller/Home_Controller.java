@@ -14,6 +14,7 @@ import javafx.stage.StageStyle;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -21,6 +22,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -59,29 +61,10 @@ public class Home_Controller implements Initializable {
         rootpane.getChildren().setAll(pane);
     }
 
-
-
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
-            Statement statement = myConn.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT `Name` FROM `excursions`");
-            String Name = null;
-            ArrayList<String> results = new ArrayList<String>();
-            while (rs.next()){
-                results.add(rs.getString(1));
-//                Name = rs.getString("Name");
-            }
-            TextFields.bindAutoCompletion(auto_search, results);
-            System.out.println(results);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        String[] words = {"STINGRAY CITY SANDBAR & BEACH BREAK", "TURTLES & STINGRAYS LAND & SEA ADVENTURE", "CAYMAN CULTURAL EXPRESS"};
-
-
+        sample.server ser;
+        ser = new sample.server();
+        TextFields.bindAutoCompletion(auto_search, ser.search_result());
     }
 }
