@@ -8,7 +8,6 @@
 
 .signupbtn:hover{
     -fx-text-fill: #44146f;
-    -fx-underline: true;
 }
 
 .loginbtn{
@@ -40,6 +39,65 @@
 }
 
 .closeicon{
-    -fx-background-color: #000;
+    -fx-fill: #545454;
+}
+
+
+.closeicon:hover{
+    -fx-fill: #e71d36;
+}
+
+.minimizeicon {
+    -fx-text-fill: #545454;
+}
+
+.minimizeicon:hover{
+    -fx-text-fill: #2ec4b6;
+}
+
+.arrow{
+    -fx-fill: #545454;
+}
+
+.arrow:hover{
+    -fx-fill: #2ec4b6;
+}
+
+.search_adv{
+    -fx-underline: false;
+}
+
+.search_adv:hover{
+    -fx-underline: true;
+}
+
+.home_loginSign{
+    -fx-text-fill: purple;
+}
+
+.home_loginSign:hover{
+    -fx-font-weight: bold;
+    -fx-text-fill: #2ec4b6;
+}
+
+.navbtn{
+    -fx-background-color: transparent;
+    -fx-text-fill: #fff;
+    -fx-border-color: #fff;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+
+.navbtn:hover{
+    -fx-background-color: #fff;
     -fx-text-fill: #000;
+    -fx-border-radius: 0px;
+}
+
+.logoutbtn{
+    -fx-background-color: #fff;
+    -fx-text-fill: #000;
+    -fx-border-color: #fff;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
 }

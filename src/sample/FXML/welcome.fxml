@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="homepane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" prefHeight="500.0" prefWidth="800.0" stylesheets="@../Style/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.welcome_controller">
+   <children>
+      <AnchorPane prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: purple;">
+         <children>
+            <ImageView fitHeight="105.0" fitWidth="105.0" layoutX="50.0" layoutY="69.0">
+               <image>
+                  <Image url="@../Logo/excursion_logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Label layoutX="221.0" layoutY="42.0" text="WELCOME">
+         <font>
+            <Font size="38.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="0.2349206424894787" startY="0.02857142857142857">
+               <stops>
+                  <Stop color="#992c9d" />
+                  <Stop color="#1d031c" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Label layoutX="687.0" layoutY="44.0" onMouseClicked="#Login_Register" styleClass="home_loginSign" text="Log in" textFill="PURPLE" />
+      <Label layoutX="737.0" layoutY="44.0" styleClass="home_loginSign" text="Sign Up" textFill="PURPLE" />
+      <Line endY="20.0" layoutX="728.0" layoutY="41.0" startY="1.0" stroke="PURPLE" />
+      <AnchorPane fx:id="home_search_pane" layoutX="200.0" layoutY="138.0" prefHeight="105.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="255.0" layoutY="74.0" onMouseClicked="#search_pane_change" styleClass="search_adv" text="Advanced Search" />
+            <TextField fx:id="auto_search" layoutX="110.0" layoutY="37.0" prefHeight="32.0" prefWidth="381.0" promptText="Search..." />
+            <FontAwesomeIconView glyphName="SEARCH" layoutX="505.0" layoutY="61.0" onMouseClicked="#SearchResult_Basic" size="25" styleClass="arrow" />
+            <FontAwesomeIconView glyphName="ARROW_RIGHT" layoutX="350.0" layoutY="87.0" onMouseClicked="#search_pane_change" styleClass="arrow" />
+         </children>
+      </AnchorPane>
+      <MaterialDesignIconView glyphName="CLOSE" layoutX="771.0" layoutY="25.0" onMouseClicked="#Close_App" size="30" styleClass="closeicon" />
+      <Label layoutX="749.0" layoutY="-28.0" onMouseClicked="#Minimize_App" prefHeight="43.0" prefWidth="18.0" styleClass="minimizeicon" stylesheets="@../Style/stylesheet.css" text="_">
+         <font>
+            <Font name="System Bold" size="41.0" />
+         </font>
+      </Label>
+      <AnchorPane fx:id="home_search_result" layoutX="200.0" layoutY="243.0" prefHeight="258.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="33.0" layoutY="14.0" text="RECOMMENDED PLACES">
+               <font>
+                  <Font name="Avenir Next Ultra Light Italic" size="14.0" />
+               </font>
+            </Label>
+            <Line endX="100.0" layoutX="169.0" layoutY="34.0" startX="-135.0" />
+            <ImageView fitHeight="133.0" fitWidth="200.0" layoutX="40.0" layoutY="67.0">
+               <image>
+                  <Image url="@../Logo/foxtour.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="133.0" fitWidth="200.0" layoutX="368.0" layoutY="67.0">
+               <image>
+                  <Image url="@../Logo/marti.JPG" />
+               </image>
+            </ImageView>
+            <Label layoutX="114.0" layoutY="210.0" text="OLD RIGA">
+               <font>
+                  <Font name="Avenir Next Medium" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="438.0" layoutY="210.0" text="TIKI BEACH">
+               <font>
+                  <Font name="Avenir Next Medium" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

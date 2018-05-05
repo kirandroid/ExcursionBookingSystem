@@ -1,39 +1,39 @@
 package sample.Controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sample.Main;
 
+import java.io.IOException;
 import java.sql.*;
 
-public class Login_Register_Controller{
+public class Login_Controller {
+
+    @FXML
+    private void Minimize_App(MouseEvent event){
+        Main.stage.setIconified(true);
+    }
+
     @FXML
     private TextField Login_Username;
 
     @FXML
     private PasswordField Login_Password;
 
-    public void login_registerButton(){
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Register.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Register");
-            stage.setScene(new Scene(root1));
-            stage.show();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+    @FXML
+    private AnchorPane Login_pane;
+
     @FXML
     private void Close_App(MouseEvent event){
         System.exit(0);
@@ -66,6 +66,18 @@ public class Login_Register_Controller{
         catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void change_to_register() throws IOException{
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/Register.fxml"));
+        Login_pane.getChildren().setAll(pane);
+
+    }
+
+    @FXML
+    private void BackTo_Home(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../FXML/welcome.fxml"));
+        Main.stage.getScene().setRoot(root);
     }
 
 }

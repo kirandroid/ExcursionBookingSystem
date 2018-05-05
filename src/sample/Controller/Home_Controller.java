@@ -4,31 +4,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class Home_Controller implements Initializable {
     @FXML
-    private AnchorPane rootpane;
+    private AnchorPane rootpane, content1;
 
     @FXML
     private TextField auto_search;
@@ -65,6 +52,6 @@ public class Home_Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         sample.server ser;
         ser = new sample.server();
-        TextFields.bindAutoCompletion(auto_search, ser.search_result());
+        TextFields.bindAutoCompletion(auto_search, ser.SearchResult_AutoComplete());
     }
 }

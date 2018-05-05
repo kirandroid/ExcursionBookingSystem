@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="change_basic_search" prefHeight="105.0" prefWidth="600.0" stylesheets="@../Style/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.advanced_search_controller">
+   <children>
+      <ComboBox fx:id="PortID_box_ID" layoutX="25.0" layoutY="40.0" prefWidth="150.0" promptText="PORT ID" />
+      <ComboBox fx:id="Excursionname_box_ID" layoutX="202.0" layoutY="40.0" onMouseClicked="#ExcursionName_Clicked" prefWidth="150.0" promptText="EXCURSION NAME" />
+      <ComboBox fx:id="ExcursionID_box_ID" layoutX="374.0" layoutY="40.0" onMouseClicked="#ExcursionID_Clicked" prefWidth="150.0" promptText="EXCURSION ID" />
+      <Label layoutX="267.0" layoutY="74.0" onMouseClicked="#search_basic_change" styleClass="search_adv" text="Basic Search" />
+      <FontAwesomeIconView glyphName="SEARCH" layoutX="540.0" layoutY="60.0" onMouseClicked="#SearchResult_Advanced" size="25" styleClass="arrow" />
+      <FontAwesomeIconView glyphName="ARROW_LEFT" layoutX="252.0" layoutY="87.0" onMouseClicked="#search_basic_change" styleClass="arrow" />
+   </children>
+</AnchorPane>
