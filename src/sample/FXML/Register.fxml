@@ -17,12 +17,12 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField layoutX="118.0" layoutY="107.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="First Name" />
-      <TextField layoutX="118.0" layoutY="157.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="Last Name" />
-      <TextField layoutX="118.0" layoutY="207.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="Email" />
-      <PasswordField layoutX="118.0" layoutY="257.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="Password" />
-      <TextField layoutX="118.0" layoutY="307.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="Cabin Number" />
-      <Button layoutX="211.0" layoutY="414.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="loginbtn" text="Button" />
+      <TextField fx:id="Register_FirstName" layoutX="118.0" layoutY="107.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="First Name" />
+      <TextField fx:id="Register_LastName" layoutX="118.0" layoutY="157.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="Last Name" />
+      <TextField fx:id="Register_Email" layoutX="118.0" layoutY="207.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="Email" />
+      <PasswordField fx:id="Register_Password" layoutX="118.0" layoutY="257.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="Password" />
+      <TextField fx:id="Register_CabinNo" layoutX="118.0" layoutY="307.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="Cabin Number" />
+      <Button layoutX="211.0" layoutY="414.0" mnemonicParsing="false" onMouseClicked="#Register_Login_Text_Clicked" prefHeight="50.0" prefWidth="150.0" styleClass="loginbtn" text="Register" />
       <Label layoutX="523.0" layoutY="-27.0" onMouseClicked="#Minimize_App" prefHeight="43.0" prefWidth="18.0" styleClass="minimizeicon" stylesheets="@../Style/stylesheet.css" text="_">
          <font>
             <Font name="System Bold" size="41.0" />

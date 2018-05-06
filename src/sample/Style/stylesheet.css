@@ -1,5 +1,5 @@
 .sidebar{
-    -fx-background-color: #6A1B9A;
+    -fx-background-color: purple;
 }
 
 .signupbtn{
@@ -86,6 +86,12 @@
     -fx-border-color: #fff;
     -fx-border-width: 1px;
     -fx-border-style: solid;
+}
+
+.navbar:hover{
+    -fx-border-color: #2ec4b6;
+    -fx-border-radius: 2px;
+    -fx-cursor: hand;
 }
 
 .navbtn:hover{

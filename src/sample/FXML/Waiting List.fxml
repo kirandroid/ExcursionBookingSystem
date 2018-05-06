@@ -13,16 +13,16 @@
       <Button layoutX="225.0" layoutY="206.0" mnemonicParsing="false" style="-fx-background-color: #002699;" text="Update Booking" textFill="WHITE" />
       <ImageView fitHeight="172.0" fitWidth="172.0" layoutX="16.0" layoutY="67.0">
          <image>
-            <Image url="@../Logo/Ultimate%20Bahrain.jpg" />
+            <Image url="@../Logo/Old%20Time%20Bergen.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="24.0" layoutY="17.0" text="Your Booking List" textFill="PURPLE">
+      <Label layoutX="24.0" layoutY="17.0" text="Your Waiting List" textFill="PURPLE">
          <font>
             <Font name="Avenir Next Regular" size="19.0" />
          </font>
       </Label>
-      <Label layoutX="238.0" layoutY="68.0" text="Excursion Name: Ultimate Bahrain" />
-      <Label layoutX="238.0" layoutY="107.0" text="Port ID: 003990" />
-      <Label layoutX="239.0" layoutY="145.0" text="Excursion ID: 971533" />
+      <Label layoutX="238.0" layoutY="68.0" text="Excursion Name: Old Time Bergen" />
+      <Label layoutX="238.0" layoutY="107.0" text="Port ID: 001439" />
+      <Label layoutX="239.0" layoutY="145.0" text="Excursion ID: 993030" />
    </children>
 </AnchorPane>

@@ -1,24 +1,21 @@
 package sample.Controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import sample.Main;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.sql.*;
 
 public class Login_Controller {
+    public static String loggedInFirstName, loggedInID;
 
     @FXML
     private void Minimize_App(MouseEvent event){
@@ -32,7 +29,7 @@ public class Login_Controller {
     private PasswordField Login_Password;
 
     @FXML
-    private AnchorPane Login_pane;
+    private AnchorPane Login_pane, login_rootpane;
 
     @FXML
     private void Close_App(MouseEvent event){
@@ -41,24 +38,31 @@ public class Login_Controller {
 
     public void LoginButtonClicked(){
         try{
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/registration", "root", "");
-            String sql = "SELECT * from user_reg where Email=? and Password = ?";
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+            messageDigest.update(Login_Password.getText().getBytes("UTF-8"), 0, Login_Password.getText().length());
+            String encriptedPassword = DatatypeConverter.printHexBinary(messageDigest.digest());
+
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            String sql = "SELECT * from registration where Email=? and Password = ?";
             PreparedStatement mySt = myConn.prepareStatement(sql);
             mySt.setString(1, Login_Username.getText());
-            mySt.setString(2, Login_Password.getText());
+            mySt.setString(2, encriptedPassword);
             ResultSet rs = mySt.executeQuery();
+
             if(rs.next()){
                 System.out.println("Sucessfully logged in!");
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("profile.fxml"));
-                Parent root1 = (Parent) fxmlLoader.load();
-                Stage stage = new Stage();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setTitle("Profile");
-                stage.setScene(new Scene(root1));
-                stage.show();
-                //set text to main controller
-//                profile_controller profile_controller = fxmlLoader.getController();
-//                profile_controller.settext(Login_Username.getText());
+                AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/profile.fxml"));
+                login_rootpane.getChildren().setAll(pane);
+                sample.Controller.welcome_controller welcomeController;
+                welcomeController = new sample.Controller.welcome_controller();
+                welcomeController.isLoggedIn =true;
+                Statement statement = myConn.createStatement();
+                ResultSet firstnameset = statement.executeQuery("SELECT `First Name`, `ID` FROM `registration` WHERE `Email` ='"+Login_Username.getText()+"'");
+                while (firstnameset.next()) {
+                    loggedInFirstName = firstnameset.getString("First Name");
+                    loggedInID = firstnameset.getString("ID");
+                    System.out.println(loggedInFirstName+loggedInID);
+                }
             }
             else
                 System.out.println("Incorrect Details");

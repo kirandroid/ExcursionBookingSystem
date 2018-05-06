@@ -1,12 +1,10 @@
 package sample.Controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -21,6 +19,7 @@ import java.util.ResourceBundle;
 
 public class welcome_controller implements Initializable {
     private String id = null, port = null, name = null;
+    public static Boolean isLoggedIn= false;
 
     //---------------For making the screen draggable-------------
     double x, y;
@@ -30,6 +29,13 @@ public class welcome_controller implements Initializable {
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         stage.setX(event.getScreenX()-x);
         stage.setY(event.getScreenY()-y);
+        stage.setOpacity(0.7f);
+    }
+
+    @FXML
+    void windowDraggedDone(MouseEvent event){
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setOpacity(1.0f);
     }
 
     @FXML
@@ -40,7 +46,10 @@ public class welcome_controller implements Initializable {
     //---------------For making the screen draggable-------------
 
     @FXML
-    public AnchorPane home_search_pane, home_search_result, homepane;
+    public AnchorPane home_search_pane, home_search_result, homepane, Error_doLogin;
+
+    @FXML
+    private Label Home_LogIn_button, loggedIn_username;
 
     @FXML
     public TextField auto_search;
@@ -93,6 +102,12 @@ public class welcome_controller implements Initializable {
 
     }
 
+    @FXML
+    private void BackTo_Profile(MouseEvent event) throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/profile.fxml"));
+        homepane.getChildren().setAll(pane);
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -100,5 +115,18 @@ public class welcome_controller implements Initializable {
         sample.server ser;
         ser = new sample.server();
         TextFields.bindAutoCompletion(auto_search, ser.SearchResult_AutoComplete());
+        if (isLoggedIn){
+            sample.Controller.Login_Controller login_controller;
+            login_controller = new sample.Controller.Login_Controller();
+
+            Home_LogIn_button.setVisible(false);
+            loggedIn_username.setVisible(true);
+            loggedIn_username.setText("Welcome "+login_controller.loggedInFirstName);
+
+        }
+        else{
+            Home_LogIn_button.setVisible(true);
+            loggedIn_username.setVisible(false);
+        }
     }
 }
