@@ -1,5 +1,6 @@
 package sample.Controller;
 
+import com.jfoenix.controls.JFXSlider;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -7,6 +8,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
@@ -22,11 +24,20 @@ public class SearchResult_Controller {
 
     private String SelectedExcursionName = null, SelectedExcursionID = null, SelectedPortID = null;
 
-    @FXML
-    private TextField NoOfSeat_BasicSearch;
 
     @FXML
+    private JFXSlider Booking_NoOfSeat;
+    @FXML
+    private Label sliderNo;
+
+    @FXML
+    void sliderclicked(MouseEvent event) {
+        Double noofseat = Booking_NoOfSeat.getValue();
+        sliderNo.setText(""+noofseat.intValue());
+    }
+    @FXML
     private void BookBtn_BasicSearch(MouseEvent event){
+        Double noofseat = Booking_NoOfSeat.getValue();
         sample.Controller.welcome_controller welcomeController;
         welcomeController = new sample.Controller.welcome_controller();
 
@@ -38,7 +49,7 @@ public class SearchResult_Controller {
         }
         else if(welcomeController.isLoggedIn == true){
             try {
-                if (Integer.parseInt(NoOfSeat_BasicSearch.getText()) > 32){
+                if (noofseat.intValue() > 32){
                     System.out.println("Error! No of seat should not be less than 32");
                 }
                 else {
@@ -48,7 +59,7 @@ public class SearchResult_Controller {
                     mySt.setString(1, SelectedExcursionName);
                     mySt.setString(2, SelectedExcursionID);
                     mySt.setString(3, SelectedPortID);
-                    mySt.setString(4, NoOfSeat_BasicSearch.getText());
+                    mySt.setString(4, String.valueOf(noofseat.intValue()));
                     mySt.setString(5, login_controller.loggedInID);
                     mySt.executeUpdate();
                     mySt.close();
@@ -66,6 +77,7 @@ public class SearchResult_Controller {
         SelectedExcursionName = ExcursionName_get;
         SelectedExcursionID = ExcursionID_get;
         SelectedPortID = PortID_get;
+
         ExcursionName_BasicSearch.setText(ExcursionName_get);
         ExcursionID_BasicSearch.setText(ExcursionID_get);
         PortID_BasicSearch.setText(PortID_get);

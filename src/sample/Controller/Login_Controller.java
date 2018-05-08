@@ -1,21 +1,23 @@
 package sample.Controller;
 
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import sample.Main;
 
+import javax.swing.*;
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.sql.*;
 
 public class Login_Controller {
-    public static String loggedInFirstName, loggedInID;
+    public static String loggedInFirstName, loggedInID, loggedUsername;
 
     @FXML
     private void Minimize_App(MouseEvent event){
@@ -23,10 +25,13 @@ public class Login_Controller {
     }
 
     @FXML
-    private TextField Login_Username;
+    private JFXTextField Login_Username;
 
     @FXML
-    private PasswordField Login_Password;
+    private Label ErrorLogin_Label;
+
+    @FXML
+    private JFXPasswordField Login_Password;
 
     @FXML
     private AnchorPane Login_pane, login_rootpane;
@@ -38,6 +43,7 @@ public class Login_Controller {
 
     public void LoginButtonClicked(){
         try{
+            loggedUsername = Login_Username.getText();
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
             messageDigest.update(Login_Password.getText().getBytes("UTF-8"), 0, Login_Password.getText().length());
             String encriptedPassword = DatatypeConverter.printHexBinary(messageDigest.digest());
@@ -65,7 +71,7 @@ public class Login_Controller {
                 }
             }
             else
-                System.out.println("Incorrect Details");
+                ErrorLogin_Label.setVisible(true);
         }
         catch(Exception e){
             e.printStackTrace();

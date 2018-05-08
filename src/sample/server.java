@@ -1,11 +1,10 @@
 package sample;
 
-import sample.Controller.SearchResult_Controller;
-
 import java.sql.*;
 import java.util.ArrayList;
 
 public class server {
+    public static String UserID, UserFName, UserLName, UserEmail, UserCabin, UserGender;
 
     public String[] SearchResult_AutoComplete(){
         ArrayList<String> results = new ArrayList<String>();
@@ -27,5 +26,28 @@ public class server {
         dbresult = results.toArray(dbresult);
         return dbresult;
     }
+
+    public void Registration_Info(){
+        sample.Controller.Login_Controller login_controller;
+        login_controller = new sample.Controller.Login_Controller();
+        try{
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs","root", "");
+            Statement statement = myConn.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT `ID`,`First Name`,`Last Name`,`Email`,`Cabin Number`,`Gender` FROM `registration` WHERE `Email` ='"+login_controller.loggedUsername+"'");
+            while (rs.next()){
+                UserID = rs.getString("ID");
+                UserFName = rs.getString("First Name");
+                UserLName = rs.getString("Last Name");
+                UserEmail = rs.getString("Email");
+                UserCabin = rs.getString("Cabin Number");
+                UserGender = rs.getString("Gender");
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+
     }
 

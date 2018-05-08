@@ -59,9 +59,11 @@ public class profile_controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sample.Controller.Login_Controller loginController;
-        loginController = new sample.Controller.Login_Controller();
+        sample.server server;
+        server = new sample.server();
 
-        Profile_DisplayName.setText("Hello, "+loginController.loggedInFirstName+"!");
+        System.out.println(server.UserFName);
+
+        Profile_DisplayName.setText("Hello, "+server.UserFName+"!");
     }
 }
