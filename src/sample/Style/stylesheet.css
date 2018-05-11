@@ -2,6 +2,14 @@
     -fx-background-color: purple;
 }
 
+.jfx-snackbar-content{
+    -fx-background-color: purple;
+}
+
+.jfx-snackbar-toast{
+    -fx-text-fill: white;
+}
+
 .signupbtn{
     -fx-text-fill: #8d8b8b;
 }

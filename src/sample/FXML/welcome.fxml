@@ -30,153 +30,157 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <Label layoutX="221.0" layoutY="42.0" text="WELCOME">
-         <font>
-            <Font size="38.0" />
-         </font>
-         <textFill>
-            <LinearGradient endX="1.0" endY="1.0" startX="0.2349206424894787" startY="0.02857142857142857">
-               <stops>
-                  <Stop color="#992c9d" />
-                  <Stop color="#1d031c" offset="1.0" />
-               </stops>
-            </LinearGradient>
-         </textFill>
-      </Label>
-      <Label fx:id="Home_LogIn_button" layoutX="687.0" layoutY="44.0" onMouseClicked="#Login_Register" styleClass="home_loginSign" text="Log in  |  Sign up" textFill="PURPLE" />
-      <MaterialDesignIconView glyphName="CLOSE" layoutX="771.0" layoutY="25.0" onMouseClicked="#Close_App" size="30" styleClass="closeicon" />
-      <Label layoutX="749.0" layoutY="-28.0" onMouseClicked="#Minimize_App" prefHeight="43.0" prefWidth="18.0" styleClass="minimizeicon" stylesheets="@../Style/stylesheet.css" text="_">
-         <font>
-            <Font name="System Bold" size="41.0" />
-         </font>
-      </Label>
-      <Label fx:id="loggedIn_username" layoutX="646.0" layoutY="43.0" onMouseClicked="#BackTo_Profile" styleClass="search_adv">
-         <font>
-            <Font size="14.0" />
-         </font></Label>
-      <AnchorPane fx:id="Error_doLogin" layoutX="590.0" layoutY="75.0" prefHeight="70.0" prefWidth="211.0" visible="false">
+      <AnchorPane fx:id="home_snackbarPane" layoutX="200.0" prefHeight="500.0" prefWidth="600.0">
          <children>
-            <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#ff1f1f" height="40.0" layoutX="6.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="200.0" />
-            <Polygon fill="#ff1f1f" layoutX="107.0" layoutY="15.0" scaleX="0.3" scaleY="0.2" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
-              <points>
-                <Double fx:value="-50.0" />
-                <Double fx:value="40.0" />
-                <Double fx:value="50.0" />
-                <Double fx:value="40.0" />
-                <Double fx:value="0.0" />
-                <Double fx:value="-60.0" />
-              </points>
-            </Polygon>
-            <Text fill="WHITE" layoutX="43.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login or Signup First">
+            <AnchorPane fx:id="Search_Main_Pane" layoutY="137.0" prefHeight="363.0" prefWidth="600.0">
+               <children>
+                  <AnchorPane fx:id="home_recommended_place" layoutY="105.0" prefHeight="258.0" prefWidth="600.0">
+                     <children>
+                        <Label layoutX="33.0" layoutY="14.0" text="RECOMMENDED PLACES">
+                           <font>
+                              <Font name="Avenir Next Ultra Light Italic" size="14.0" />
+                           </font>
+                        </Label>
+                        <Line endX="100.0" layoutX="169.0" layoutY="34.0" startX="-135.0" />
+                        <AnchorPane fx:id="contain_place1" layoutX="17.0" layoutY="44.0" prefHeight="200.0" prefWidth="270.0">
+                           <children>
+                              <Pane fx:id="Places_Pane1" prefHeight="200.0" prefWidth="270.0">
+                                 <children>
+                                    <ImageView fitHeight="133.0" fitWidth="200.0" layoutX="35.0" layoutY="25.0">
+                                       <image>
+                                          <Image url="@../Logo/foxtour.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="Recommended_Place1" layoutX="109.0" layoutY="169.0">
+                                       <font>
+                                          <Font name="Avenir Next Medium" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="contain_place2" layoutX="316.0" layoutY="44.0" prefHeight="200.0" prefWidth="270.0">
+                           <children>
+                              <Pane fx:id="Places_Pane2" prefHeight="200.0" prefWidth="270.0">
+                                 <children>
+                                    <ImageView fitHeight="133.0" fitWidth="200.0" layoutX="35.0" layoutY="25.0">
+                                       <image>
+                                          <Image url="@../Logo/marti.JPG" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="Recommended_Place2" layoutX="105.0" layoutY="167.0">
+                                       <font>
+                                          <Font name="Avenir Next Medium" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="home_search_pane" prefHeight="105.0" prefWidth="600.0">
+                     <children>
+                        <Label layoutX="255.0" layoutY="74.0" onMouseClicked="#search_pane_change" styleClass="search_adv" text="Advanced Search" />
+                        <TextField fx:id="auto_search" layoutX="110.0" layoutY="37.0" prefHeight="32.0" prefWidth="381.0" promptText="Search..." />
+                        <FontAwesomeIconView glyphName="SEARCH" layoutX="505.0" layoutY="61.0" onMouseClicked="#SearchResult_Basic" size="25" styleClass="arrow" />
+                        <FontAwesomeIconView glyphName="ARROW_RIGHT" layoutX="350.0" layoutY="87.0" onMouseClicked="#search_pane_change" styleClass="arrow" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="Pane_BasicSearchResult" layoutY="105.0" prefHeight="258.0" prefWidth="600.0" stylesheets="@../Style/stylesheet.css" visible="false">
+                     <children>
+                        <Label layoutX="43.0" layoutY="24.0" text="EXCURSION DETAILS">
+                           <font>
+                              <Font name="Avenir Next Ultra Light Italic" size="14.0" />
+                           </font>
+                        </Label>
+                        <Line endX="100.0" layoutX="179.0" layoutY="44.0" startX="-135.0" />
+                        <Label layoutX="44.0" layoutY="70.0" text="Excursion Name :">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="ExcursionName_BasicSearch" layoutX="169.0" layoutY="71.0" />
+                        <Label layoutX="43.0" layoutY="107.0" text="Excursion ID : ">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="ExcursionID_BasicSearch" layoutX="169.0" layoutY="108.0" prefHeight="17.0" prefWidth="47.0" />
+                        <Label layoutX="44.0" layoutY="145.0" text="Port ID :">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="PortID_BasicSearch" layoutX="169.0" layoutY="146.0" />
+                        <Button layoutX="409.0" layoutY="107.0" mnemonicParsing="false" onMouseClicked="#BookBtn_BasicSearch" prefHeight="44.0" prefWidth="99.0" styleClass="loginbtn" text="BOOK" />
+                        <Label layoutX="43.0" layoutY="217.0" text="Number of seat :">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <JFXSlider fx:id="Booking_NoOfSeat" blockIncrement="1.0" layoutX="162.0" layoutY="220.0" majorTickUnit="4.0" max="32.0" min="1.0" minorTickCount="1" onMouseClicked="#sliderclicked" value="1.0" />
+                        <Label fx:id="sliderNo" layoutX="327.0" layoutY="201.0">
+                           <font>
+                              <Font size="35.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="44.0" layoutY="182.0" text="Remaining Seats :">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="RemainingSeat" layoutX="169.0" layoutY="183.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="Error_doLogin" layoutX="389.0" layoutY="67.0" prefHeight="70.0" prefWidth="211.0" visible="false">
+               <children>
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#ff1f1f" height="40.0" layoutX="6.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="200.0" />
+                  <Polygon fill="#ff1f1f" layoutX="107.0" layoutY="15.0" scaleX="0.3" scaleY="0.2" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+                    <points>
+                      <Double fx:value="-50.0" />
+                      <Double fx:value="40.0" />
+                      <Double fx:value="50.0" />
+                      <Double fx:value="40.0" />
+                      <Double fx:value="0.0" />
+                      <Double fx:value="-60.0" />
+                    </points>
+                  </Polygon>
+                  <Text fill="WHITE" layoutX="43.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login or Signup First">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <Label fx:id="loggedIn_username" layoutX="437.0" layoutY="47.0" onMouseClicked="#BackTo_Profile" styleClass="search_adv">
                <font>
                   <Font size="14.0" />
                </font>
-            </Text>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="Search_Main_Pane" layoutX="200.0" layoutY="138.0" prefHeight="363.0" prefWidth="600.0">
-         <children>
-            <AnchorPane fx:id="home_recommended_place" layoutY="105.0" prefHeight="258.0" prefWidth="600.0">
-               <children>
-                  <Label layoutX="33.0" layoutY="14.0" text="RECOMMENDED PLACES">
-                     <font>
-                        <Font name="Avenir Next Ultra Light Italic" size="14.0" />
-                     </font>
-                  </Label>
-                  <Line endX="100.0" layoutX="169.0" layoutY="34.0" startX="-135.0" />
-                  <AnchorPane fx:id="contain_place1" layoutX="17.0" layoutY="44.0" prefHeight="200.0" prefWidth="270.0">
-                     <children>
-                        <Pane fx:id="Places_Pane1" prefHeight="200.0" prefWidth="270.0">
-                           <children>
-                              <ImageView fitHeight="133.0" fitWidth="200.0" layoutX="35.0" layoutY="25.0">
-                                 <image>
-                                    <Image url="@../Logo/foxtour.jpg" />
-                                 </image>
-                              </ImageView>
-                              <Label layoutX="109.0" layoutY="169.0" text="OLD RIGA">
-                                 <font>
-                                    <Font name="Avenir Next Medium" size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="contain_place2" layoutX="316.0" layoutY="44.0" prefHeight="200.0" prefWidth="270.0">
-                     <children>
-                        <Pane fx:id="Places_Pane2" prefHeight="200.0" prefWidth="270.0">
-                           <children>
-                              <ImageView fitHeight="133.0" fitWidth="200.0" layoutX="35.0" layoutY="25.0">
-                                 <image>
-                                    <Image url="@../Logo/marti.JPG" />
-                                 </image>
-                              </ImageView>
-                              <Label layoutX="105.0" layoutY="167.0" text="TIKI BEACH">
-                                 <font>
-                                    <Font name="Avenir Next Medium" size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="home_search_pane" prefHeight="105.0" prefWidth="600.0">
-               <children>
-                  <Label layoutX="255.0" layoutY="74.0" onMouseClicked="#search_pane_change" styleClass="search_adv" text="Advanced Search" />
-                  <TextField fx:id="auto_search" layoutX="110.0" layoutY="37.0" prefHeight="32.0" prefWidth="381.0" promptText="Search..." />
-                  <FontAwesomeIconView glyphName="SEARCH" layoutX="505.0" layoutY="61.0" onMouseClicked="#SearchResult_Basic" size="25" styleClass="arrow" />
-                  <FontAwesomeIconView glyphName="ARROW_RIGHT" layoutX="350.0" layoutY="87.0" onMouseClicked="#search_pane_change" styleClass="arrow" />
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="Pane_BasicSearchResult" layoutY="105.0" prefHeight="258.0" prefWidth="600.0" stylesheets="@../Style/stylesheet.css" visible="false">
-               <children>
-                  <Label layoutX="43.0" layoutY="24.0" text="EXCURSION DETAILS">
-                     <font>
-                        <Font name="Avenir Next Ultra Light Italic" size="14.0" />
-                     </font>
-                  </Label>
-                  <Line endX="100.0" layoutX="179.0" layoutY="44.0" startX="-135.0" />
-                  <Label layoutX="44.0" layoutY="70.0" text="Excursion Name :">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="ExcursionName_BasicSearch" layoutX="169.0" layoutY="71.0" />
-                  <Label layoutX="43.0" layoutY="107.0" text="Excursion ID : ">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="ExcursionID_BasicSearch" layoutX="169.0" layoutY="108.0" prefHeight="17.0" prefWidth="47.0" />
-                  <Label layoutX="44.0" layoutY="145.0" text="Port ID :">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="PortID_BasicSearch" layoutX="169.0" layoutY="146.0" />
-                  <Button layoutX="409.0" layoutY="107.0" mnemonicParsing="false" onMouseClicked="#BookBtn_BasicSearch" prefHeight="44.0" prefWidth="99.0" styleClass="loginbtn" text="BOOK" />
-                  <Label layoutX="43.0" layoutY="217.0" text="Number of seat :">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <JFXSlider fx:id="Booking_NoOfSeat" blockIncrement="1.0" layoutX="162.0" layoutY="220.0" majorTickUnit="4.0" max="32.0" min="1.0" minorTickCount="1" onMouseClicked="#sliderclicked" value="1.0" />
-                  <Label fx:id="sliderNo" layoutX="327.0" layoutY="201.0">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="44.0" layoutY="182.0" text="Remaining Seats :">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="RemainingSeat" layoutX="169.0" layoutY="183.0" />
-               </children>
-            </AnchorPane>
-         </children>
-      </AnchorPane>
+            </Label>
+            <Label fx:id="Home_LogIn_button" layoutX="480.0" layoutY="46.0" onMouseClicked="#Login_Register" styleClass="home_loginSign" text="Log in  |  Sign up" textFill="PURPLE" />
+            <Label layoutX="33.0" layoutY="55.0" text="WELCOME">
+               <font>
+                  <Font size="38.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0" startX="0.2349206424894787" startY="0.02857142857142857">
+                     <stops>
+                        <Stop color="#992c9d" />
+                        <Stop color="#1d031c" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <MaterialDesignIconView glyphName="CLOSE" layoutX="571.0" layoutY="26.0" onMouseClicked="#Close_App" size="30" styleClass="closeicon" />
+            <Label layoutX="550.0" layoutY="-27.0" onMouseClicked="#Minimize_App" prefHeight="43.0" prefWidth="18.0" styleClass="minimizeicon" stylesheets="@../Style/stylesheet.css" text="_">
+               <font>
+                  <Font name="System Bold" size="41.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
    </children>
 </AnchorPane>

@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import sample.Main;
 
 import java.io.IOException;
@@ -61,8 +62,7 @@ public class profile_controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         sample.server server;
         server = new sample.server();
-
-        System.out.println(server.UserFName);
+        server.Registration_Info();
 
         Profile_DisplayName.setText("Hello, "+server.UserFName+"!");
     }

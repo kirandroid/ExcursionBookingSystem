@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXRadioButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="570.0" stylesheets="@../Style/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.Register_Controller">
+<AnchorPane fx:id="Register_Pane" prefHeight="500.0" prefWidth="570.0" stylesheets="@../Style/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.Register_Controller">
    <children>
       <Label layoutX="211.0" layoutY="53.0" text="SignUp to get access" textFill="#aba9a9">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="Register_FirstName" layoutX="118.0" layoutY="107.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="First Name" />
-      <TextField fx:id="Register_LastName" layoutX="118.0" layoutY="157.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="Last Name" />
-      <TextField fx:id="Register_Email" layoutX="118.0" layoutY="207.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="Email" />
-      <PasswordField fx:id="Register_Password" layoutX="118.0" layoutY="257.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="Password" />
-      <TextField fx:id="Register_CabinNo" layoutX="118.0" layoutY="307.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="Cabin Number" />
+      <TextField fx:id="Register_FirstName" layoutX="118.0" layoutY="122.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#Register_FirstName_Typed" prefHeight="40.0" prefWidth="335.0" promptText="First Name" />
+      <TextField fx:id="Register_LastName" layoutX="118.0" layoutY="172.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#Register_LastName_Typed" prefHeight="40.0" prefWidth="335.0" promptText="Last Name" />
+      <TextField fx:id="Register_Email" layoutX="118.0" layoutY="222.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#Register_Email_Typed" prefHeight="40.0" prefWidth="335.0" promptText="Email" />
+      <PasswordField fx:id="Register_Password" layoutX="118.0" layoutY="272.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#Register_Password_Typed" prefHeight="40.0" prefWidth="335.0" promptText="Password" />
+      <TextField fx:id="Register_CabinNo" layoutX="118.0" layoutY="322.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="335.0" promptText="Cabin Number" />
       <Label layoutX="523.0" layoutY="-27.0" onMouseClicked="#Minimize_App" prefHeight="43.0" prefWidth="18.0" styleClass="minimizeicon" stylesheets="@../Style/stylesheet.css" text="_">
          <font>
             <Font name="System Bold" size="41.0" />
@@ -28,10 +31,38 @@
       </Label>
       <MaterialDesignIconView fill="#686666" glyphName="CLOSE" layoutX="540.0" layoutY="26.0" onMouseClicked="#Close_App" size="30" styleClass="closeicon" />
       <FontAwesomeIconView glyphName="ARROW_LEFT" layoutX="5.0" layoutY="23.0" onMouseClicked="#BackTo_Login" size="20" styleClass="arrow" />
-      <JFXButton buttonType="RAISED" layoutX="211.0" layoutY="414.0" onAction="#Register_Login_Text_Clicked" onMouseClicked="#Register_Login_Text_Clicked" prefHeight="50.0" prefWidth="150.0" styleClass="Registerbutton" text="Register">
+      <JFXButton fx:id="Register_Button" buttonType="RAISED" disable="true" layoutX="211.0" layoutY="429.0" onMouseClicked="#Register_Login_Text_Clicked" prefHeight="50.0" prefWidth="150.0" styleClass="Registerbutton" text="Register">
          <font>
             <Font size="14.0" />
          </font>
       </JFXButton>
+      <Label fx:id="Error_Email" layoutX="185.0" layoutY="90.0" text="*Please Enter a Valid Email Address" textFill="RED" visible="false">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <JFXCheckBox fx:id="termsCondition" layoutX="165.0" layoutY="400.0" onAction="#termsCondition_Pressed" text="I hereby Agree to the Terms &amp; Condition" />
+      <Label fx:id="Error_Name" layoutX="185.0" layoutY="90.0" text="Name should only contain letters" textFill="RED" visible="false">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="Error_Empty" layoutX="183.0" layoutY="90.0" text="Error Please fill out all the TextFields" textFill="RED" visible="false">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <JFXRadioButton fx:id="checkBoxMale" layoutX="125.0" layoutY="371.0" onAction="#genderSelected" selected="true" text="Male">
+         <toggleGroup>
+            <ToggleGroup fx:id="Gender" />
+         </toggleGroup>
+      </JFXRadioButton>
+      <JFXRadioButton fx:id="checkBoxFemale" layoutX="234.0" layoutY="371.0" onAction="#genderSelected" text="Female" toggleGroup="$Gender" />
+      <JFXRadioButton fx:id="checkBoxUnspecified" layoutX="359.0" layoutY="371.0" onAction="#genderSelected" text="Suman" toggleGroup="$Gender" />
+      <Label fx:id="Error_Password" layoutX="153.0" layoutY="90.0" text="*Password should be at least 8 characters long" textFill="RED" visible="false">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

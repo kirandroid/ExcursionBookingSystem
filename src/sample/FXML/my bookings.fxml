@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="336.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.Booking_Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.Booking_Controller">
    <children>
-      <TableView fx:id="tableView" prefHeight="336.0" prefWidth="500.0">
+      <TableView fx:id="tableView" layoutY="60.0" prefHeight="336.0" prefWidth="500.0">
          <columns>
             <TableColumn fx:id="ExcursionID_Column" prefWidth="78.0" text="Excursion ID" />
             <TableColumn fx:id="PortID_Column" prefWidth="72.0" text="Port ID" />
@@ -15,5 +19,23 @@
             <TableColumn fx:id="BookedDate_Column" prefWidth="100.0" text="Booked Date" />
          </columns>
       </TableView>
+      <Label layoutX="176.0" layoutY="14.0" text="My Bookings">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <JFXButton layoutY="414.0" onAction="#cancelBooking_Button" styleClass="Loginbutton" stylesheets="@../Style/stylesheet.css" text="Cancel Booking" />
+      <JFXTextField fx:id="Update_textfield_Seat" labelFloat="true" layoutX="250.0" layoutY="413.0" promptText="Update Seat" />
+      <JFXButton layoutX="398.0" layoutY="413.0" styleClass="Registerbutton" stylesheets="@../Style/stylesheet.css" text="Update Booking" />
+      <Label fx:id="Cancel_ID" layoutX="139.0" layoutY="417.0" prefHeight="20.0" prefWidth="74.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="111.0" layoutY="417.0" text="ID :  ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

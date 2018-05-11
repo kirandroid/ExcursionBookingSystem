@@ -2,6 +2,7 @@ package sample.Controller;
 
 import com.jfoenix.controls.JFXRippler;
 import com.jfoenix.controls.JFXSlider;
+import com.jfoenix.controls.JFXSnackbar;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,11 +22,13 @@ import java.sql.*;
 import java.util.ResourceBundle;
 
 public class welcome_controller implements Initializable {
+    //SELECT `ID` FROM `excursions` ORDER BY RAND() LIMIT 2
+
     private String id = null, port = null, name = null;
-    private String Seat = null, Total_Seat = null;
+    private String Seat = null, Total_Seat = null, check_excursion_ID;
     public static Boolean isLoggedIn= false;
     @FXML
-    private Label ExcursionName_BasicSearch, ExcursionID_BasicSearch, PortID_BasicSearch, RemainingSeat, sliderNo;
+    private Label ExcursionName_BasicSearch, ExcursionID_BasicSearch, PortID_BasicSearch, RemainingSeat, sliderNo, Recommended_Place1, Recommended_Place2;
 
     @FXML
     private JFXSlider Booking_NoOfSeat;
@@ -34,7 +37,7 @@ public class welcome_controller implements Initializable {
     private Pane Places_Pane1, Places_Pane2;
 
     @FXML
-    public AnchorPane homepane, Search_Main_Pane, Pane_BasicSearchResult, home_recommended_place, Error_doLogin, contain_place2, contain_place1;
+    public AnchorPane home_snackbarPane, homepane, Search_Main_Pane, Pane_BasicSearchResult, home_recommended_place, Error_doLogin, contain_place2, contain_place1;
 
     @FXML
     private Label Home_LogIn_button, loggedIn_username;
@@ -128,7 +131,7 @@ public class welcome_controller implements Initializable {
         sliderNo.setText(""+noofseat.intValue());
     }
     @FXML
-    private void BookBtn_BasicSearch(MouseEvent event){
+    public void BookBtn_BasicSearch(MouseEvent event){
         Double noofseat = Booking_NoOfSeat.getValue();
         sample.Controller.welcome_controller welcomeController;
         welcomeController = new sample.Controller.welcome_controller();
@@ -147,11 +150,18 @@ public class welcome_controller implements Initializable {
                 while (rs.next()) {
                     Total_Seat = rs.getString("Seat");
                 }
+                ResultSet rs2 = statement.executeQuery("SELECT `Excursion ID` FROM `booking` WHERE `Booked By` = '"+login_controller.loggedInID+"'");
+                while (rs2.next()){
+                    check_excursion_ID = rs2.getString("Excursion ID");
+                }
                 if (Integer.parseInt(Total_Seat)-noofseat.intValue() < 0){
                     System.out.println("Sorry all the seat of the Excursion is booked. Do you want to be in the waiting list?");
                 }
+                else if (id.equals(check_excursion_ID)){
+                    System.out.println("Sorry you have already booked this Excursion!");
+                }
                 else {
-                    String sql = "INSERT INTO `booking`(`Excursion Name`, `Excursion ID`, `Port ID`, `Booked Seat`, `Booked By`, `Booked Date`)"+"values(?,?,?,?,?,current_timestamp)";
+                    String sql = "INSERT INTO `booking`(`Excursion Name`, `Excursion ID`, `Port ID`, `Booked Seat`, `Booked By`, `Status`, `Booked Date`)"+"values(?,?,?,?,?,?,current_timestamp)";
                     PreparedStatement mySt = myConn.prepareStatement(sql);
                     Statement stmt = myConn.createStatement();
                     String updateSeat = "UPDATE `excursions` SET `Seat`=`Seat`-'"+noofseat.intValue()+"' WHERE `ID` = '"+id+"'";
@@ -161,11 +171,14 @@ public class welcome_controller implements Initializable {
                     mySt.setString(3, port);
                     mySt.setString(4, String.valueOf(noofseat.intValue()));
                     mySt.setString(5, login_controller.loggedInID);
+                    mySt.setString(6, "Booked");
                     mySt.executeUpdate();
                     mySt.close();
                     System.out.println("Data sucessfully Inserted");
                     RemainingSeat.setText("");
                     RemainingSeat.setText(Total_Seat);
+                    JFXSnackbar snackbar = new JFXSnackbar(home_snackbarPane);
+                    snackbar.show("Data sucessfully Inserted", 2000);
                 }
 
             }
@@ -183,7 +196,19 @@ public class welcome_controller implements Initializable {
 
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources){
+//        try {
+//            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+//            Statement statement = myConn.createStatement();
+//            ResultSet rs = statement.executeQuery("SELECT `ID` FROM `excursions` ORDER BY RAND() LIMIT 2 ");
+//            while (rs.next()) {
+//                Recommended_Place_id1 = rs.getString("ID");
+//
+//            }
+//        }catch (SQLException e){
+//            e.printStackTrace();
+//        }
+
         JFXRippler rippler1 = new JFXRippler(Places_Pane1);
         JFXRippler rippler2 = new JFXRippler(Places_Pane2);
         contain_place2.getChildren().add(rippler2);
@@ -206,5 +231,7 @@ public class welcome_controller implements Initializable {
             Home_LogIn_button.setVisible(true);
             loggedIn_username.setVisible(false);
         }
+
+
     }
 }

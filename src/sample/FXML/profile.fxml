@@ -31,14 +31,14 @@
       </AnchorPane>
       <AnchorPane layoutX="230.0" prefHeight="500.0" prefWidth="570.0">
          <children>
-            <Label fx:id="Profile_DisplayName" layoutX="54.0" layoutY="60.0" prefHeight="44.0" prefWidth="302.0">
-               <font>
-                  <Font name="Avenir Next Regular" size="19.0" />
-               </font>
-            </Label>
-            <AnchorPane fx:id="Booking_Pane" layoutX="35.0" layoutY="106.0" prefHeight="336.0" prefWidth="500.0">
+            <AnchorPane fx:id="Booking_Pane" layoutX="35.0" layoutY="46.0" prefHeight="454.0" prefWidth="514.0">
                <children>
-                  <ImageView fitHeight="326.0" fitWidth="500.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+                  <Label fx:id="Profile_DisplayName" prefHeight="44.0" prefWidth="302.0">
+                     <font>
+                        <Font name="Avenir Next Regular" size="19.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="326.0" fitWidth="500.0" layoutX="-86.0" layoutY="-106.0" pickOnBounds="true" preserveRatio="true" x="100.0" y="200.0">
                      <image>
                         <Image url="@../Logo/f.png" />
                      </image>

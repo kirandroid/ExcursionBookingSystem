@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="500.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.waiting_Controller">
    <children>
-      <Button layoutX="362.0" layoutY="206.0" mnemonicParsing="false" style="-fx-background-color: #cc0000;" text="Cancel Booking" textFill="WHITE" />
-      <Button layoutX="225.0" layoutY="206.0" mnemonicParsing="false" style="-fx-background-color: #002699;" text="Update Booking" textFill="WHITE" />
-      <ImageView fitHeight="172.0" fitWidth="172.0" layoutX="16.0" layoutY="67.0">
-         <image>
-            <Image url="@../Logo/Old%20Time%20Bergen.jpg" />
-         </image>
-      </ImageView>
-      <Label layoutX="24.0" layoutY="17.0" text="Your Waiting List" textFill="PURPLE">
+      <TableView fx:id="tableView" layoutY="60.0" prefHeight="336.0" prefWidth="500.0">
+         <columns>
+            <TableColumn fx:id="ExcursionID_Column" prefWidth="78.0" text="Excursion ID" />
+            <TableColumn fx:id="PortID_Column" prefWidth="72.0" text="Port ID" />
+            <TableColumn fx:id="ExcursionName_Column" prefWidth="211.0" text="Excursion Name" />
+            <TableColumn fx:id="SeatNo_Column" prefWidth="38.0" text="Seat" />
+            <TableColumn fx:id="BookedDate_Column" prefWidth="100.0" text="Booked Date" />
+         </columns>
+      </TableView>
+      <Label layoutX="161.0" layoutY="14.0" text="My Waiting List">
          <font>
-            <Font name="Avenir Next Regular" size="19.0" />
+            <Font size="26.0" />
          </font>
       </Label>
-      <Label layoutX="238.0" layoutY="68.0" text="Excursion Name: Old Time Bergen" />
-      <Label layoutX="238.0" layoutY="107.0" text="Port ID: 001439" />
-      <Label layoutX="239.0" layoutY="145.0" text="Excursion ID: 993030" />
    </children>
 </AnchorPane>

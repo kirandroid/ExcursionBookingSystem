@@ -45,7 +45,7 @@
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <Label fx:id="ExcursionID_BasicSearch" layoutX="169.0" layoutY="108.0" prefHeight="17.0" prefWidth="10.0" />
+                  <Label fx:id="ExcursionID_BasicSearch" layoutX="169.0" layoutY="108.0" prefHeight="17.0" prefWidth="96.0" />
                   <Label layoutX="44.0" layoutY="145.0" text="Port ID :">
                      <font>
                         <Font size="13.0" />

@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -67,7 +68,6 @@ public class Login_Controller {
                 while (firstnameset.next()) {
                     loggedInFirstName = firstnameset.getString("First Name");
                     loggedInID = firstnameset.getString("ID");
-                    System.out.println(loggedInFirstName+loggedInID);
                 }
             }
             else
