@@ -26,7 +26,7 @@
             </Label>
             <Button layoutX="45.0" layoutY="229.0" mnemonicParsing="false" onAction="#adminPane_UserClicked" prefHeight="40.0" prefWidth="140.0" styleClass="navbtn" text="Users" />
             <Button layoutX="45.0" layoutY="279.0" mnemonicParsing="false" onAction="#adminPane_BookingClicked" prefHeight="40.0" prefWidth="140.0" styleClass="navbtn" text="Bookings" />
-            <Button layoutX="45.0" layoutY="329.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" styleClass="navbtn" text="Waitlists" />
+            <Button layoutX="45.0" layoutY="329.0" mnemonicParsing="false" onAction="#adminPane_WaitingClicked" prefHeight="40.0" prefWidth="140.0" styleClass="navbtn" text="Waitlists" />
             <Button layoutX="45.0" layoutY="379.0" mnemonicParsing="false" onMouseClicked="#LogOut" prefHeight="40.0" prefWidth="140.0" styleClass="logoutbtn" text="Log Out" />
             <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="55.0" layoutY="386.0">
                <image>

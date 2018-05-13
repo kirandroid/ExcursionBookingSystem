@@ -48,4 +48,11 @@ public class admin_Controller {
         AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/adminBooking.fxml"));
         adminPane_TablePane.getChildren().setAll(pane);
     }
+
+    @FXML
+    void adminPane_WaitingClicked(ActionEvent event) throws IOException{
+        adminPane_Greeting.setVisible(false);
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/adminWaiting.fxml"));
+        adminPane_TablePane.getChildren().setAll(pane);
+    }
 }
