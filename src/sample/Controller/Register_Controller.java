@@ -44,7 +44,7 @@ public class Register_Controller implements Initializable{
     private JFXCheckBox termsCondition;
 
     @FXML
-    private Label Error_Email, Error_Name, Error_Empty, Error_Password;
+    private Label Error_Email, Error_Name, Error_Empty, Error_Password, Error_EmailExist;
 
     @FXML
     private JFXRadioButton checkBoxFemale, checkBoxUnspecified, checkBoxMale;
@@ -148,28 +148,32 @@ public class Register_Controller implements Initializable{
                 Error_Email.setVisible(false);
                 Error_Password.setVisible(false);
                 Error_Name.setVisible(false);
+                Error_EmailExist.setVisible(false);
             }
             else if (!validator.isValid(Register_Email.getText())){
                 Error_Email.setVisible(true);
                 Error_Empty.setVisible(false);
                 Error_Password.setVisible(false);
                 Error_Name.setVisible(false);
+                Error_EmailExist.setVisible(false);
             }
             else if (!validateString(Register_FirstName.getText()) || !validateString(Register_LastName.getText())){
                 Error_Email.setVisible(false);
                 Error_Empty.setVisible(false);
                 Error_Password.setVisible(false);
                 Error_Name.setVisible(true);
+                Error_EmailExist.setVisible(false);
             }
             else if (Register_Password.getText().length()<8){
                 Error_Password.setVisible(true);
                 Error_Email.setVisible(false);
                 Error_Empty.setVisible(false);
                 Error_Name.setVisible(false);
+                Error_EmailExist.setVisible(false);
             }
             else{
                 Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
-                String sql = "INSERT INTO `registration`(`First Name`, `Last Name`, `Email`, `Password`, `Cabin Number`, `Gender`,`Joined Date`)"+"values(?,?,?,?,?,?,current_timestamp)";
+                String sql = "INSERT INTO `registration`(`First Name`, `Last Name`, `Email`, `Password`, `Cabin Number`, `Gender`,`Joined Date`,`Role`)"+"values(?,?,?,?,?,?,current_timestamp,'User')";
                 PreparedStatement mySt = myConn.prepareStatement(sql);
                 mySt.setString(1, Register_FirstName.getText());
                 mySt.setString(2, Register_LastName.getText());
@@ -194,7 +198,11 @@ public class Register_Controller implements Initializable{
 
         }
         catch (MySQLIntegrityConstraintViolationException dup){
-            System.out.println("Email already exists");
+            Error_Password.setVisible(false);
+            Error_Email.setVisible(false);
+            Error_Empty.setVisible(false);
+            Error_Name.setVisible(false);
+            Error_EmailExist.setVisible(true);
         }
         catch (Exception e){
             e.printStackTrace();

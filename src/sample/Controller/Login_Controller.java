@@ -50,11 +50,18 @@ public class Login_Controller {
             String encriptedPassword = DatatypeConverter.printHexBinary(messageDigest.digest());
 
             Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
-            String sql = "SELECT * from registration where Email=? and Password = ?";
+            String sql = "SELECT * from registration where Email=? and Password = ? and Role = ?";
             PreparedStatement mySt = myConn.prepareStatement(sql);
             mySt.setString(1, Login_Username.getText());
             mySt.setString(2, encriptedPassword);
+            mySt.setString(3, "User");
             ResultSet rs = mySt.executeQuery();
+
+            PreparedStatement myStAdmin = myConn.prepareStatement(sql);
+            myStAdmin.setString(1, Login_Username.getText());
+            myStAdmin.setString(2, encriptedPassword);
+            myStAdmin.setString(3, "Admin");
+            ResultSet rsAd = myStAdmin.executeQuery();
 
             if(rs.next()){
                 System.out.println("Sucessfully logged in!");
@@ -69,6 +76,10 @@ public class Login_Controller {
                     loggedInFirstName = firstnameset.getString("First Name");
                     loggedInID = firstnameset.getString("ID");
                 }
+            }
+            else if (rsAd.next()){
+                AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/Admin_Panel.fxml"));
+                login_rootpane.getChildren().setAll(pane);
             }
             else
                 ErrorLogin_Label.setVisible(true);

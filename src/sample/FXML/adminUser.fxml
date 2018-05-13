@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="462.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.adminUser_Controller">
+   <children>
+      <TableView fx:id="adminUserTable" layoutX="14.0" layoutY="54.0" prefHeight="354.0" prefWidth="528.0">
+        <columns>
+          <TableColumn fx:id="userID_Column" prefWidth="41.0" text="ID" />
+          <TableColumn fx:id="fName_Column" prefWidth="109.0" text="First Name" />
+            <TableColumn fx:id="lName_Column" prefWidth="75.0" text="Last Name" />
+            <TableColumn fx:id="email_Column" prefWidth="75.0" text="Email" />
+            <TableColumn fx:id="cabin_Column" prefWidth="75.0" text="Cabin" />
+            <TableColumn fx:id="gender_Column" prefWidth="75.0" text="Gender" />
+            <TableColumn fx:id="joinedDate_Column" prefWidth="75.0" text="Joined Date" />
+        </columns>
+      </TableView>
+      <Label layoutX="253.0" layoutY="14.0" text="Users">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

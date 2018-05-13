@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="462.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.adminBooking_Controller">
+   <children>
+      <TableView fx:id="adminBookingTable" layoutX="14.0" layoutY="54.0" prefHeight="354.0" prefWidth="528.0">
+        <columns>
+          <TableColumn fx:id="bookingID_Column" prefWidth="41.0" text="ID" />
+          <TableColumn fx:id="bookingExName_Column" prefWidth="109.0" text="Excursion Name" />
+            <TableColumn fx:id="bookingExID_Column" prefWidth="75.0" text="Excursion ID" />
+            <TableColumn fx:id="bookingPortID_Column" prefWidth="75.0" text="Port ID" />
+            <TableColumn fx:id="bookedSeat_column" prefWidth="75.0" text="Booked Seat" />
+            <TableColumn fx:id="bookedBy_Column" prefWidth="75.0" text="Booked By" />
+            <TableColumn fx:id="bookedDate_Column" prefWidth="75.0" text="Booked Date" />
+        </columns>
+      </TableView>
+      <Label layoutX="237.0" layoutY="14.0" text="Bookings">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

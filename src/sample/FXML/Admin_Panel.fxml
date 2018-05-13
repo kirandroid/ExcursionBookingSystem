@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="adminPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@../Style/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.admin_Controller">
+   <children>
+      <AnchorPane prefHeight="500.0" prefWidth="230.0" style="-fx-background-color: purple;">
+         <children>
+            <Circle fill="#1f93ff00" layoutX="115.0" layoutY="102.0" radius="47.0" stroke="WHITE" strokeType="INSIDE" />
+            <ImageView fitHeight="70.0" fitWidth="71.0" layoutX="84.0" layoutY="66.0">
+               <image>
+                  <Image url="@../Logo/Admin.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="93.0" layoutY="159.0" text="Admin" textFill="WHITE">
+               <font>
+                  <Font name="Avenir Next Regular" size="16.0" />
+               </font>
+            </Label>
+            <Button layoutX="45.0" layoutY="229.0" mnemonicParsing="false" onAction="#adminPane_UserClicked" prefHeight="40.0" prefWidth="140.0" styleClass="navbtn" text="Users" />
+            <Button layoutX="45.0" layoutY="279.0" mnemonicParsing="false" onAction="#adminPane_BookingClicked" prefHeight="40.0" prefWidth="140.0" styleClass="navbtn" text="Bookings" />
+            <Button layoutX="45.0" layoutY="329.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" styleClass="navbtn" text="Waitlists" />
+            <Button layoutX="45.0" layoutY="379.0" mnemonicParsing="false" onMouseClicked="#LogOut" prefHeight="40.0" prefWidth="140.0" styleClass="logoutbtn" text="Log Out" />
+            <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="55.0" layoutY="386.0">
+               <image>
+                  <Image url="@../Logo/logout.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="230.0" prefHeight="500.0" prefWidth="570.0">
+         <children>
+            <MaterialDesignIconView glyphName="CLOSE" layoutX="540.0" layoutY="26.0" onMouseClicked="#Close_App" size="30" styleClass="closeicon" />
+            <Label layoutX="518.0" layoutY="-27.0" onMouseClicked="#Minimize_App" prefHeight="43.0" prefWidth="18.0" styleClass="minimizeicon" stylesheets="@../Style/stylesheet.css" text="_">
+               <font>
+                  <Font name="System Bold" size="41.0" />
+               </font>
+            </Label>
+            <AnchorPane fx:id="adminPane_TablePane" layoutX="9.0" layoutY="32.0" prefHeight="462.0" prefWidth="554.0">
+               <children>
+                  <Label fx:id="adminPane_Greeting" layoutX="14.0" layoutY="14.0" text="Hello Admin!">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
