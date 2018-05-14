@@ -1,8 +1,8 @@
 package sample.Controller;
 
-import com.jfoenix.controls.JFXRippler;
-import com.jfoenix.controls.JFXSlider;
-import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.TextFields;
 import sample.Main;
@@ -32,6 +34,9 @@ public class welcome_controller implements Initializable {
 
     @FXML
     private JFXSlider Booking_NoOfSeat;
+
+    @FXML
+    private StackPane welcome_StackPane;
 
     @FXML
     private Pane Places_Pane1, Places_Pane2;
@@ -161,30 +166,61 @@ public class welcome_controller implements Initializable {
                     System.out.println("Sorry you have already booked this Excursion!");
                 }
                 else {
-                    String sql = "INSERT INTO `booking`(`Excursion Name`, `Excursion ID`, `Port ID`, `Booked Seat`, `Booked By`, `Status`, `Booked Date`)"+"values(?,?,?,?,?,?,current_timestamp)";
-                    PreparedStatement mySt = myConn.prepareStatement(sql);
-                    Statement stmt = myConn.createStatement();
-                    String updateSeat = "UPDATE `excursions` SET `Seat`=`Seat`-'"+noofseat.intValue()+"' WHERE `ID` = '"+id+"'";
-                    stmt.executeUpdate(updateSeat);
-                    mySt.setString(1, auto_search.getText());
-                    mySt.setString(2, id);
-                    mySt.setString(3, port);
-                    mySt.setString(4, String.valueOf(noofseat.intValue()));
-                    mySt.setString(5, login_controller.loggedInID);
-                    mySt.setString(6, "Booked");
-                    mySt.executeUpdate();
-                    mySt.close();
-                    System.out.println("Data sucessfully Inserted");
-                    RemainingSeat.setText("");
-                    RemainingSeat.setText(Total_Seat);
-                    JFXSnackbar snackbar = new JFXSnackbar(home_snackbarPane);
-                    snackbar.show("Data sucessfully Inserted", 2000);
+                    welcome_StackPane.setVisible(true);
+                    JFXDialogLayout content = new JFXDialogLayout();
+                    content.setHeading(new Text("Booking"));
+                    content.setBody(new Text("Do you want to Confirm Bookings?"));
+                    JFXDialog dialog = new JFXDialog(welcome_StackPane, content, JFXDialog.DialogTransition.CENTER);
+                    JFXButton closeButton = new JFXButton("Close");
+                    closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            dialog.close();
+                            welcome_StackPane.setVisible(false);
+                        }
+                    });
+                    JFXButton okButton = new JFXButton("Okay");
+                    okButton.setOnAction(new EventHandler<ActionEvent>() {
+
+                        @Override
+                        public void handle(ActionEvent event) {
+                            try {
+                                String sql = "INSERT INTO `booking`(`Excursion Name`, `Excursion ID`, `Port ID`, `Booked Seat`, `Booked By`, `Status`, `Booked Date`)"+"values(?,?,?,?,?,?,current_timestamp)";
+                                PreparedStatement mySt = myConn.prepareStatement(sql);
+                                Statement stmt = myConn.createStatement();
+                                String updateSeat = "UPDATE `excursions` SET `Seat`=`Seat`-'"+noofseat.intValue()+"' WHERE `ID` = '"+id+"'";
+                                stmt.executeUpdate(updateSeat);
+                                mySt.setString(1, auto_search.getText());
+                                mySt.setString(2, id);
+                                mySt.setString(3, port);
+                                mySt.setString(4, String.valueOf(noofseat.intValue()));
+                                mySt.setString(5, login_controller.loggedInID);
+                                mySt.setString(6, "Booked");
+                                mySt.executeUpdate();
+                                mySt.close();
+                                System.out.println("Data sucessfully Inserted");
+                                RemainingSeat.setText("");
+                                RemainingSeat.setText(Total_Seat);
+                                JFXSnackbar snackbar = new JFXSnackbar(home_snackbarPane);
+                                snackbar.show("Data sucessfully Inserted", 2000);
+                            }
+                            catch (SQLException e){
+                                e.printStackTrace();
+                            }
+                            dialog.close();
+                            welcome_StackPane.setVisible(false);
+                        }
+                    });
+                    content.setActions(closeButton, okButton);
+                    dialog.show();
+
                 }
 
             }
             catch (Exception e){
                 e.printStackTrace();
             }
+
         }
     }
 
