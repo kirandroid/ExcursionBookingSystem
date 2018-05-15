@@ -41,9 +41,6 @@ public class Booking_Controller implements Initializable {
     private JFXTextField Update_textfield_Seat;
 
     @FXML
-    private JFXButton cancelBooking_Button;
-
-    @FXML
     private TableView<booking_info> tableView;
 
     @FXML
@@ -128,7 +125,7 @@ public class Booking_Controller implements Initializable {
                     try {
                         Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
                         Statement statement = myConn.createStatement();
-                        statement.execute("UPDATE `booking` SET `Status`='Cancelled' WHERE `Booked By`='" + login_controller.loggedInID + "' AND `Excursion ID`='" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'");
+                        statement.execute("UPDATE `booking` SET `Status`='Cancelled' WHERE `Booked By`='" + login_controller.loggedInID + "' AND `Excursion ID`='" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'AND `Status` = 'Booked'");
                         ResultSet bookedSeatByUser_RS = statement.executeQuery("SELECT `Booked Seat` FROM `booking` WHERE `Booked By`='" + login_controller.loggedInID + "' AND `Excursion ID`='" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'");
                         while (bookedSeatByUser_RS.next()) {
                             bookedSeatByUser = bookedSeatByUser_RS.getString("Booked Seat");
@@ -201,7 +198,7 @@ public class Booking_Controller implements Initializable {
                                 try {
                                     Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
                                     Statement statement = myConn.createStatement();
-                                    statement.execute("UPDATE `booking` SET `Booked Seat`= `Booked Seat` +'" + Integer.parseInt(Update_textfield_Seat.getText()) + "'WHERE `Excursion ID`='" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'AND `Booked By`='" + login_controller.loggedInID + "'");
+                                    statement.execute("UPDATE `booking` SET `Booked Seat`= `Booked Seat` +'" + Integer.parseInt(Update_textfield_Seat.getText()) + "'WHERE `Excursion ID`='" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'AND `Booked By`='" + login_controller.loggedInID + "'AND `Status` = 'Booked'");
                                     statement.execute("UPDATE `excursions` SET `Seat`=`Seat`-'" + Integer.parseInt(Update_textfield_Seat.getText()) + "' WHERE `ID` = '" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'");
                                 } catch (SQLException e) {
                                     e.printStackTrace();
@@ -242,7 +239,7 @@ public class Booking_Controller implements Initializable {
 
                     Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs","root", "");
                     Statement statement = con.createStatement();
-                    ResultSet boSeatRS = statement.executeQuery("SELECT `Booked Seat` FROM `booking` WHERE `Excursion ID`='"+tableView.getSelectionModel().getSelectedItem().getExcursion_ID()+"'AND `Booked By`='"+login_controller.loggedInID+"'");
+                    ResultSet boSeatRS = statement.executeQuery("SELECT `Booked Seat` FROM `booking` WHERE `Excursion ID`='"+tableView.getSelectionModel().getSelectedItem().getExcursion_ID()+"'AND `Booked By`='"+login_controller.loggedInID+"'AND `Status` = 'Booked'");
                     while (boSeatRS.next()){
                         boSeat = boSeatRS.getString("Booked Seat");
                     }
@@ -279,7 +276,7 @@ public class Booking_Controller implements Initializable {
                                 try {
                                     Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs","root", "");
                                     Statement statement = myConn.createStatement();
-                                    statement.execute("UPDATE `booking` SET `Booked Seat`= `Booked Seat` -'"+Integer.parseInt(Update_textfield_Seat.getText())+"'WHERE `Excursion ID`='"+tableView.getSelectionModel().getSelectedItem().getExcursion_ID()+"'AND `Booked By`='"+login_controller.loggedInID+"'");
+                                    statement.execute("UPDATE `booking` SET `Booked Seat`= `Booked Seat` -'"+Integer.parseInt(Update_textfield_Seat.getText())+"'WHERE `Excursion ID`='"+tableView.getSelectionModel().getSelectedItem().getExcursion_ID()+"'AND `Booked By`='"+login_controller.loggedInID+"' AND `Status` = 'Booked'");
                                     statement.execute("UPDATE `excursions` SET `Seat`=`Seat`+'"+Integer.parseInt(Update_textfield_Seat.getText())+"' WHERE `ID` = '"+tableView.getSelectionModel().getSelectedItem().getExcursion_ID()+"'");
                                 }
                                 catch (SQLException e){
