@@ -1,10 +1,10 @@
 package sample.Controller;
 
-import com.jfoenix.controls.JFXRippler;
-import com.jfoenix.controls.JFXSlider;
-import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,6 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import sample.Main;
 
 import java.io.IOException;
@@ -32,6 +34,9 @@ public class advanced_search_controller implements Initializable {
 
     @FXML
     private JFXSlider Booking_NoOfSeat;
+
+    @FXML
+    private StackPane welcome_StackPane;
 
     @FXML
     private AnchorPane Search_Main_Pane, Pane_ADVSearchResult, home_recommended_place, contain_place2, contain_place1;
@@ -163,13 +168,72 @@ public class advanced_search_controller implements Initializable {
                 while (rs2.next()){
                     check_excursion_ID = rs2.getString("Excursion ID");
                 }
-
-                if (Integer.parseInt(Total_Seat) - noofseat.intValue() < 0) {
-                    System.out.println("Sorry all the seat of the Excursion is booked. Do you want to be in the waiting list?");
-                }
-                else if (ExcursionID_box_ID.getValue().toString().equals(check_excursion_ID)){
+                if (ExcursionID_box_ID.getValue().toString().equals(check_excursion_ID)){
                     System.out.println("Sorry you have already booked this tour!");
                 }
+                else if (noofseat.intValue()> Integer.parseInt(Total_Seat)){
+                    int seatSub = Integer.parseInt(Total_Seat)-noofseat.intValue();
+                    welcome_StackPane.setVisible(true);
+                    JFXDialogLayout content = new JFXDialogLayout();
+                    content.setHeading(new Text("Booking"));
+                    content.setBody(new Text("Sorry only "+Total_Seat+" seats are available. Do you want to keep rest "+ Math.abs(seatSub)+" seats in waiting list?"));
+                    JFXDialog dialog = new JFXDialog(welcome_StackPane, content, JFXDialog.DialogTransition.CENTER);
+                    JFXButton closeButton = new JFXButton("Close");
+                    closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            dialog.close();
+                            welcome_StackPane.setVisible(false);
+                        }
+                    });
+                    JFXButton okButton = new JFXButton("Okay");
+                    okButton.setOnAction(new EventHandler<ActionEvent>() {
+
+                        @Override
+                        public void handle(ActionEvent event) {
+                            try {
+                                String sql = "INSERT INTO `booking`(`Excursion Name`, `Excursion ID`, `Port ID`, `Booked Seat`, `Booked By`, `Status`, `Booked Date`)"+"values(?,?,?,?,?,?,current_timestamp)";
+                                String sqlWait = "INSERT INTO `booking`(`Excursion Name`, `Excursion ID`, `Port ID`, `Booked Seat`, `Booked By`, `Status`, `Booked Date`)"+"values(?,?,?,?,?,?,current_timestamp)";
+                                PreparedStatement mySt = myConn.prepareStatement(sql);
+                                PreparedStatement myStWait = myConn.prepareStatement(sqlWait);
+                                Statement stmt = myConn.createStatement();
+                                String updateSeat = "UPDATE `excursions` SET `Seat`=`Seat`-'"+noofseat.intValue()+"' WHERE `ID` = '"+id+"'";
+                                stmt.executeUpdate(updateSeat);
+                                mySt.setString(1, Excursionname_box_ID.getValue().toString());
+                                mySt.setString(2, ExcursionID_box_ID.getValue().toString());
+                                mySt.setString(3, PortID_box_ID.getValue().toString());
+                                mySt.setString(4, String.valueOf(noofseat.intValue()));
+                                mySt.setString(5, login_controller.loggedInID);
+                                mySt.setString(6, "Booked");
+                                mySt.executeUpdate();
+                                mySt.close();
+                                myStWait.setString(1, Excursionname_box_ID.getValue().toString());
+                                myStWait.setString(2, ExcursionID_box_ID.getValue().toString());
+                                myStWait.setString(3, PortID_box_ID.getValue().toString());
+                                myStWait.setString(4, String.valueOf(Math.abs(seatSub)));
+                                myStWait.setString(5, login_controller.loggedInID);
+                                myStWait.setString(6, "Waiting");
+                                myStWait.executeUpdate();
+                                myStWait.close();
+                                RemainingSeat.setText("");
+                                RemainingSeat.setText(Total_Seat);
+                                JFXSnackbar snackbar = new JFXSnackbar(Search_Main_Pane);
+                                snackbar.show("Data sucessfully Inserted", 2000);
+                            }
+                            catch (SQLException e){
+                                e.printStackTrace();
+                            }
+                            dialog.close();
+                            welcome_StackPane.setVisible(false);
+                        }
+                    });
+                    content.setActions(closeButton, okButton);
+                    dialog.show();
+                }
+                else if (Integer.parseInt(Total_Seat) - noofseat.intValue() < 0) {
+                    System.out.println("Sorry all the seat of the Excursion is booked. Do you want to be in the waiting list?");
+                }
+
                 else {
                     String sql = "INSERT INTO `booking`(`Excursion Name`, `Excursion ID`, `Port ID`, `Booked Seat`, `Booked By`, `Status`, `Booked Date`)" + "values(?,?,?,?,?,?,current_timestamp)";
                     Statement stmt = myConn.createStatement();
