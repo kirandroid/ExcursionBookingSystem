@@ -40,6 +40,6 @@
       </Label>
       <StackPane fx:id="userBooking_StackPane" prefHeight="454.0" prefWidth="500.0" visible="false" />
       <FontAwesomeIconView fx:id="updateSeat_Add" glyphName="ARROW_UP" layoutX="440.0" layoutY="435.0" onMouseClicked="#updateBooking_Add" size="25" styleClass="arrow" />
-      <FontAwesomeIconView fx:id="updateSeat_Sub" glyphName="ARROW_DOWN" layoutX="466.0" layoutY="436.0" size="25" styleClass="arrow" />
+      <FontAwesomeIconView fx:id="updateSeat_Sub" glyphName="ARROW_DOWN" layoutX="466.0" layoutY="436.0" onMouseClicked="#updateBooking_Sub" size="25" styleClass="arrow" />
    </children>
 </AnchorPane>
