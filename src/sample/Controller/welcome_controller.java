@@ -27,7 +27,7 @@ public class welcome_controller implements Initializable {
     //SELECT `ID` FROM `excursions` ORDER BY RAND() LIMIT 2
 
     private String id = null, port = null, name = null;
-    private String Seat = null, Total_Seat = null, check_excursion_ID;
+    private String Seat = null, Total_Seat = null, check_excursion_ID, Text_Recommended_Place1= null, Text_Recommended_Place2 = null;
     public static Boolean isLoggedIn= false;
     @FXML
     private Label ExcursionName_BasicSearch, ExcursionID_BasicSearch, PortID_BasicSearch, RemainingSeat, sliderNo, Recommended_Place1, Recommended_Place2;
@@ -127,7 +127,54 @@ public class welcome_controller implements Initializable {
         ExcursionID_BasicSearch.setText(id);
         PortID_BasicSearch.setText(port);
         RemainingSeat.setText(Seat);
+    }
 
+    public void Places_Pane1_Clicked(){
+        home_recommended_place.setVisible(false);
+        Pane_BasicSearchResult.setVisible(true);
+
+        try {
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            Statement statement = myConn.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT `Name`,`PORT_ID`, `Seat` FROM `excursions` WHERE `ID`= '"+Text_Recommended_Place1+"'");
+            while (rs.next()){
+                name = rs.getString("Name");
+                port = rs.getString("PORT_ID");
+                Seat = rs.getString("Seat");
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        ExcursionName_BasicSearch.setText(name);
+        ExcursionID_BasicSearch.setText(Text_Recommended_Place1);
+        PortID_BasicSearch.setText(port);
+        RemainingSeat.setText(Seat);
+    }
+
+    public void Places_Pane2_Clicked(){
+        home_recommended_place.setVisible(false);
+        Pane_BasicSearchResult.setVisible(true);
+
+        try {
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            Statement statement = myConn.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT `Name`,`PORT_ID`, `Seat` FROM `excursions` WHERE `ID`= '"+Text_Recommended_Place2+"'");
+            while (rs.next()){
+                name = rs.getString("Name");
+                port = rs.getString("PORT_ID");
+                Seat = rs.getString("Seat");
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        ExcursionName_BasicSearch.setText(name);
+        ExcursionID_BasicSearch.setText(Text_Recommended_Place2);
+        PortID_BasicSearch.setText(port);
+        RemainingSeat.setText(Seat);
     }
 
     @FXML
@@ -155,13 +202,62 @@ public class welcome_controller implements Initializable {
                 while (rs.next()) {
                     Total_Seat = rs.getString("Seat");
                 }
-                ResultSet rs2 = statement.executeQuery("SELECT `Excursion ID` FROM `booking` WHERE `Booked By` = '"+login_controller.loggedInID+"'");
+                ResultSet rs2 = statement.executeQuery("SELECT `Excursion ID` FROM `booking` WHERE `Booked By` = '"+login_controller.loggedInID+"' AND `Status` = 'Booked'");
                 while (rs2.next()){
                     check_excursion_ID = rs2.getString("Excursion ID");
                 }
                 if (id.equals(check_excursion_ID)){
                     System.out.println("Sorry you have already booked this Excursion!");
                 }
+                else if (Integer.parseInt(Total_Seat) <= 0){
+
+                    welcome_StackPane.setVisible(true);
+                    JFXDialogLayout content = new JFXDialogLayout();
+                    content.setHeading(new Text("Booking"));
+                    content.setBody(new Text("Sorry all the seat of the Excursion is booked. Do you want to be in the waiting list?"));
+                    JFXDialog dialog = new JFXDialog(welcome_StackPane, content, JFXDialog.DialogTransition.CENTER);
+                    JFXButton closeButton = new JFXButton("Close");
+                    closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            dialog.close();
+                            welcome_StackPane.setVisible(false);
+                        }
+                    });
+                    JFXButton okButton = new JFXButton("Okay");
+                    okButton.setOnAction(new EventHandler<ActionEvent>() {
+
+                        @Override
+                        public void handle(ActionEvent event) {
+                            try {
+                                String sql = "INSERT INTO `booking`(`Excursion Name`, `Excursion ID`, `Port ID`, `Booked Seat`, `Booked By`, `Status`, `Booked Date`)"+"values(?,?,?,?,?,?,current_timestamp)";
+                                PreparedStatement mySt = myConn.prepareStatement(sql);
+                                Statement stmt = myConn.createStatement();
+                                mySt.setString(1, auto_search.getText());
+                                mySt.setString(2, id);
+                                mySt.setString(3, port);
+                                mySt.setString(4, String.valueOf(noofseat.intValue()));
+                                mySt.setString(5, login_controller.loggedInID);
+                                mySt.setString(6, "Waiting");
+                                mySt.executeUpdate();
+                                mySt.close();
+                                RemainingSeat.setText("");
+                                RemainingSeat.setText(Total_Seat);
+                                JFXSnackbar snackbar = new JFXSnackbar(home_snackbarPane);
+                                snackbar.show("Data Inserted to Waiting List", 2000);
+                            }
+                            catch (SQLException e){
+                                e.printStackTrace();
+                            }
+                            dialog.close();
+                            welcome_StackPane.setVisible(false);
+                        }
+                    });
+                    content.setActions(closeButton, okButton);
+                    dialog.show();
+
+                }
+
                 else if (noofseat.intValue()> Integer.parseInt(Total_Seat)){
                     int seatSub = Integer.parseInt(Total_Seat)-noofseat.intValue();
                     welcome_StackPane.setVisible(true);
@@ -188,7 +284,7 @@ public class welcome_controller implements Initializable {
                                 PreparedStatement mySt = myConn.prepareStatement(sql);
                                 PreparedStatement myStWait = myConn.prepareStatement(sqlWait);
                                 Statement stmt = myConn.createStatement();
-                                String updateSeat = "UPDATE `excursions` SET `Seat`=`Seat`-'"+noofseat.intValue()+"' WHERE `ID` = '"+id+"'";
+                                String updateSeat = "UPDATE `excursions` SET `Seat`=`Seat`-'"+Total_Seat+"' WHERE `ID` = '"+id+"'";
                                 stmt.executeUpdate(updateSeat);
                                 mySt.setString(1, auto_search.getText());
                                 mySt.setString(2, id);
@@ -220,9 +316,6 @@ public class welcome_controller implements Initializable {
                     });
                     content.setActions(closeButton, okButton);
                     dialog.show();
-                }
-                else if (Integer.parseInt(Total_Seat)-noofseat.intValue() < 0){
-                    System.out.println("Sorry all the seat of the Excursion is booked. Do you want to be in the waiting list?");
                 }
                 else {
                     welcome_StackPane.setVisible(true);
@@ -257,11 +350,10 @@ public class welcome_controller implements Initializable {
                                 mySt.setString(6, "Booked");
                                 mySt.executeUpdate();
                                 mySt.close();
-                                System.out.println("Data sucessfully Inserted");
                                 RemainingSeat.setText("");
                                 RemainingSeat.setText(Total_Seat);
                                 JFXSnackbar snackbar = new JFXSnackbar(home_snackbarPane);
-                                snackbar.show("Data sucessfully Inserted", 2000);
+                                snackbar.show("Booking Successful", 2000);
                             }
                             catch (SQLException e){
                                 e.printStackTrace();
@@ -292,17 +384,43 @@ public class welcome_controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-//        try {
-//            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
-//            Statement statement = myConn.createStatement();
-//            ResultSet rs = statement.executeQuery("SELECT `ID` FROM `excursions` ORDER BY RAND() LIMIT 2 ");
-//            while (rs.next()) {
-//                Recommended_Place_id1 = rs.getString("ID");
+        try {
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            Statement statement = myConn.createStatement();
+            Statement statement1 = myConn.createStatement();
+            Statement st_randName = myConn.createStatement();
+            ResultSet booking_ExID_BoSeat_rs = statement.executeQuery("SELECT `Excursion ID`, `Booked Seat`, `Booked By` FROM `booking` WHERE `Status` = \"Waiting\" ");
+            ResultSet randomExcursion_RS = statement1.executeQuery("SELECT `ID` FROM `excursions` ORDER BY RAND() LIMIT 2");
+//            while (booking_ExID_BoSeat_rs.next()) {
+//                String booking_ExID = booking_ExID_BoSeat_rs.getString("Excursion ID");
+//                String booking_Seat = booking_ExID_BoSeat_rs.getString("Booked Seat");
+//                String booking_by = booking_ExID_BoSeat_rs.getString("Booked By");
 //
+//                //Checking if the seat of excursion is available or not by using the waitingExcursion ID.
+//                ResultSet excursionSeat_rs = statement1.executeQuery("SELECT `Seat` FROM `excursions` WHERE `ID`='"+booking_ExID+"'");
 //            }
-//        }catch (SQLException e){
-//            e.printStackTrace();
-//        }
+            while (randomExcursion_RS.next()){
+                System.out.println(randomExcursion_RS.getString("ID"));
+                Text_Recommended_Place1 = randomExcursion_RS.getString("ID");
+
+                ResultSet randomExcursionName_RS = st_randName.executeQuery("SELECT `Name` FROM `excursions` WHERE `ID` = '"+Text_Recommended_Place1+"'");
+                while (randomExcursionName_RS.next()){
+                    Recommended_Place1.setText(randomExcursionName_RS.getString("Name"));
+                }
+
+                while (randomExcursion_RS.next()){
+                    System.out.println(randomExcursion_RS.getString("ID"));
+                    Text_Recommended_Place2 = randomExcursion_RS.getString("ID");
+
+                    ResultSet randomExcursionName_RS1 = st_randName.executeQuery("SELECT `Name` FROM `excursions` WHERE `ID` = '"+Text_Recommended_Place2+"'");
+                    while (randomExcursionName_RS1.next()){
+                        Recommended_Place2.setText(randomExcursionName_RS1.getString("Name"));
+                    }
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
 
         JFXRippler rippler1 = new JFXRippler(Places_Pane1);
         JFXRippler rippler2 = new JFXRippler(Places_Pane2);

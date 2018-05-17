@@ -45,14 +45,14 @@
                         <Line endX="100.0" layoutX="169.0" layoutY="34.0" startX="-135.0" />
                         <AnchorPane fx:id="contain_place1" layoutX="17.0" layoutY="44.0" prefHeight="200.0" prefWidth="270.0">
                            <children>
-                              <Pane fx:id="Places_Pane1" prefHeight="200.0" prefWidth="270.0">
+                              <Pane fx:id="Places_Pane1" onMouseClicked="#Places_Pane1_Clicked" prefHeight="200.0" prefWidth="270.0">
                                  <children>
                                     <ImageView fitHeight="133.0" fitWidth="200.0" layoutX="35.0" layoutY="25.0">
                                        <image>
                                           <Image url="@../Logo/foxtour.jpg" />
                                        </image>
                                     </ImageView>
-                                    <Label fx:id="Recommended_Place1" layoutX="109.0" layoutY="169.0">
+                                    <Label fx:id="Recommended_Place1" layoutX="35.0" layoutY="169.0">
                                        <font>
                                           <Font name="Avenir Next Medium" size="12.0" />
                                        </font>
@@ -63,14 +63,14 @@
                         </AnchorPane>
                         <AnchorPane fx:id="contain_place2" layoutX="316.0" layoutY="44.0" prefHeight="200.0" prefWidth="270.0">
                            <children>
-                              <Pane fx:id="Places_Pane2" prefHeight="200.0" prefWidth="270.0">
+                              <Pane fx:id="Places_Pane2" onMouseClicked="#Places_Pane2_Clicked" prefHeight="200.0" prefWidth="270.0">
                                  <children>
                                     <ImageView fitHeight="133.0" fitWidth="200.0" layoutX="35.0" layoutY="25.0">
                                        <image>
                                           <Image url="@../Logo/marti.JPG" />
                                        </image>
                                     </ImageView>
-                                    <Label fx:id="Recommended_Place2" layoutX="105.0" layoutY="167.0">
+                                    <Label fx:id="Recommended_Place2" layoutX="35.0" layoutY="169.0">
                                        <font>
                                           <Font name="Avenir Next Medium" size="12.0" />
                                        </font>

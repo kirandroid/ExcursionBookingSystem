@@ -121,12 +121,7 @@ public class waiting_Controller implements Initializable {
                     try {
                         Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
                         Statement statement = myConn.createStatement();
-                        ResultSet bookedSeatByUser_RS = statement.executeQuery("SELECT `Booked Seat` FROM `booking` WHERE `Booked By`='" + login_controller.loggedInID + "' AND `Excursion ID`='" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'AND `Status` = 'Waiting'");
-                        while (bookedSeatByUser_RS.next()) {
-                            bookedSeatByUser = bookedSeatByUser_RS.getString("Booked Seat");
-                        }
                         statement.execute("UPDATE `booking` SET `Status`='Cancelled' WHERE `Booked By`='" + login_controller.loggedInID + "' AND `Excursion ID`='" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'AND `Status` = 'Waiting'");
-                        statement.execute("UPDATE `excursions` SET `Seat`=`Seat`+'" + Integer.parseInt(bookedSeatByUser) + "' WHERE `ID` = '" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }

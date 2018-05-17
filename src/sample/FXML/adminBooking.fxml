@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="462.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.adminBooking_Controller">
@@ -24,5 +28,20 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <JFXButton layoutX="10.0" layoutY="424.0" onAction="#cancelBooking_Button" styleClass="Loginbutton" stylesheets="@../Style/stylesheet.css" text="Cancel Booking" />
+      <JFXTextField fx:id="Update_textfield_Seat" labelFloat="true" layoutX="348.0" layoutY="424.0" promptText="No of Seat to Add or Sub" />
+      <Label fx:id="Cancel_ID" layoutX="149.0" layoutY="427.0" prefHeight="20.0" prefWidth="74.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="121.0" layoutY="427.0" text="ID :  ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <FontAwesomeIconView fx:id="updateSeat_Add" glyphName="ARROW_UP" layoutX="490.0" layoutY="445.0" onMouseClicked="#updateBooking_Add" size="25" styleClass="arrow" />
+      <FontAwesomeIconView fx:id="updateSeat_Sub" glyphName="ARROW_DOWN" layoutX="516.0" layoutY="445.0" onMouseClicked="#updateBooking_Sub" size="25" styleClass="arrow" />
+      <StackPane fx:id="userBooking_StackPane" prefHeight="462.0" prefWidth="554.0" visible="false" />
    </children>
 </AnchorPane>
