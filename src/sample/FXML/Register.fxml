@@ -59,7 +59,7 @@
       </JFXRadioButton>
       <JFXRadioButton fx:id="checkBoxFemale" layoutX="234.0" layoutY="371.0" onAction="#genderSelected" text="Female" toggleGroup="$Gender" />
       <JFXRadioButton fx:id="checkBoxUnspecified" layoutX="359.0" layoutY="371.0" onAction="#genderSelected" text="Others" toggleGroup="$Gender" />
-      <Label fx:id="Error_Password" layoutX="153.0" layoutY="90.0" text="*Password should be at least 8 characters long" textFill="RED" visible="false">
+      <Label fx:id="Error_Password" layoutX="153.0" layoutY="90.0" text="*Password should be at least 9 characters long" textFill="RED" visible="false">
          <font>
             <Font size="13.0" />
          </font>

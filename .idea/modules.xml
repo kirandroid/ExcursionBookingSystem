@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Excursion Booking System.iml" filepath="$PROJECT_DIR$/Excursion Booking System.iml" />
-      <module fileurl="file://$PROJECT_DIR$/src/sample/sample.iml" filepath="$PROJECT_DIR$/src/sample/sample.iml" />
     </modules>
   </component>
 </project>

@@ -28,7 +28,7 @@ public class welcome_controller implements Initializable {
 
     private String id = null, port = null, name = null;
     private String Seat = null, Total_Seat = null, check_excursion_ID, Text_Recommended_Place1= null, Text_Recommended_Place2 = null;
-    public static Boolean isLoggedIn= false;
+    public static Boolean isLoggedIn = false;
     @FXML
     private Label ExcursionName_BasicSearch, ExcursionID_BasicSearch, PortID_BasicSearch, RemainingSeat, sliderNo, Recommended_Place1, Recommended_Place2;
 
@@ -400,7 +400,6 @@ public class welcome_controller implements Initializable {
 //                ResultSet excursionSeat_rs = statement1.executeQuery("SELECT `Seat` FROM `excursions` WHERE `ID`='"+booking_ExID+"'");
 //            }
             while (randomExcursion_RS.next()){
-                System.out.println(randomExcursion_RS.getString("ID"));
                 Text_Recommended_Place1 = randomExcursion_RS.getString("ID");
 
                 ResultSet randomExcursionName_RS = st_randName.executeQuery("SELECT `Name` FROM `excursions` WHERE `ID` = '"+Text_Recommended_Place1+"'");
@@ -409,7 +408,6 @@ public class welcome_controller implements Initializable {
                 }
 
                 while (randomExcursion_RS.next()){
-                    System.out.println(randomExcursion_RS.getString("ID"));
                     Text_Recommended_Place2 = randomExcursion_RS.getString("ID");
 
                     ResultSet randomExcursionName_RS1 = st_randName.executeQuery("SELECT `Name` FROM `excursions` WHERE `ID` = '"+Text_Recommended_Place2+"'");

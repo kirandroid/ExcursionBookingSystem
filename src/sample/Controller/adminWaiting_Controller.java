@@ -51,6 +51,31 @@ public class adminWaiting_Controller implements Initializable {
     @FXML
     private TableColumn<adminbooking_info, String> bookedDate_Column;
 
+    public void refresh(){
+        sample.Controller.Login_Controller login_controller;
+        login_controller = new sample.Controller.Login_Controller();
+        adminbooking_info.clear();
+        try{
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs","root", "");
+            Statement statement = myConn.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM `booking` WHERE `Status` = \"Waiting\"");
+            while (rs.next()){
+                Excursion_ID = rs.getString("Excursion ID");
+                Port_ID = rs.getString("Port ID");
+                Excursion_Name = rs.getString("Excursion Name");
+                Booked_Seat = rs.getString("Booked Seat");
+                Booked_Date = rs.getString("Booked Date");
+                Booking_ID = rs.getString("Booking ID");
+                Booked_By = rs.getString("Booked By");
+                adminbooking_info.add(new adminbooking_info(Booking_ID, Excursion_Name,Excursion_ID,Port_ID,Booked_Seat,Booked_By, Booked_Date));
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         bookingID_Column.setCellValueFactory(new PropertyValueFactory<adminbooking_info, String>("Booking_ID"));

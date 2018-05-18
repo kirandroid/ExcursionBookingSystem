@@ -4,20 +4,22 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import sample.Main;
 
-import javax.swing.*;
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.sql.*;
+import java.util.ResourceBundle;
 
-public class Login_Controller {
+public class Login_Controller implements Initializable {
     public static String loggedInFirstName, loggedInID, loggedUsername;
 
     @FXML
@@ -42,20 +44,25 @@ public class Login_Controller {
         System.exit(0);
     }
 
+    //logs in user on button clicked, yeah!
     public void LoginButtonClicked(){
         try{
             loggedUsername = Login_Username.getText();
+
+            //This code changes the password entered by user to a hashed SHA1 text.
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
             messageDigest.update(Login_Password.getText().getBytes("UTF-8"), 0, Login_Password.getText().length());
             String encriptedPassword = DatatypeConverter.printHexBinary(messageDigest.digest());
+            //The hashed text will then be compared to the password in the database.
 
             Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
             String sql = "SELECT * from registration where Email=? and Password = ? and Role = ?";
-            PreparedStatement mySt = myConn.prepareStatement(sql);
-            mySt.setString(1, Login_Username.getText());
-            mySt.setString(2, encriptedPassword);
-            mySt.setString(3, "User");
-            ResultSet rs = mySt.executeQuery();
+            PreparedStatement myStUser = myConn.prepareStatement(sql);
+
+            myStUser.setString(1, Login_Username.getText());
+            myStUser.setString(2, encriptedPassword);
+            myStUser.setString(3, "User");
+            ResultSet rs = myStUser.executeQuery();
 
             PreparedStatement myStAdmin = myConn.prepareStatement(sql);
             myStAdmin.setString(1, Login_Username.getText());
@@ -63,8 +70,8 @@ public class Login_Controller {
             myStAdmin.setString(3, "Admin");
             ResultSet rsAd = myStAdmin.executeQuery();
 
+            //Checks for user login, if matched changes the scene to user profile
             if(rs.next()){
-                System.out.println("Sucessfully logged in!");
                 AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/profile.fxml"));
                 login_rootpane.getChildren().setAll(pane);
                 sample.Controller.welcome_controller welcomeController;
@@ -77,6 +84,7 @@ public class Login_Controller {
                     loggedInID = firstnameset.getString("ID");
                 }
             }
+            //Checks for Admin login, if matched changes the scene to Admin panel
             else if (rsAd.next()){
                 AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/Admin_Panel.fxml"));
                 login_rootpane.getChildren().setAll(pane);
@@ -89,16 +97,26 @@ public class Login_Controller {
         }
     }
 
-    public void change_to_register() throws IOException{
+    //function to change the scene to Register scene
+    public void goTo_Register() throws IOException{
         AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/Register.fxml"));
         Login_pane.getChildren().setAll(pane);
 
     }
 
+    //function to go back to the dashboard
     @FXML
-    private void BackTo_Home(MouseEvent event) throws IOException {
+    private void backTo_Home(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../FXML/welcome.fxml"));
         Main.stage.getScene().setRoot(root);
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Login_Password.setOnKeyPressed(e  ->{
+            if(e.getCode() == KeyCode.ENTER){
+                LoginButtonClicked();
+            }
+        });
+    }
 }

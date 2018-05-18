@@ -12,10 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -58,6 +55,27 @@ public class Booking_Controller implements Initializable {
     @FXML
     private TableColumn<booking_info, String> BookedDate_Column;
 
+    public void refresh(){
+        sample.Controller.Login_Controller login_controller;
+        login_controller = new sample.Controller.Login_Controller();
+        booking.clear();
+        try {
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            Statement statement = myConn.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM `booking` WHERE `Booked By` = '" + login_controller.loggedInID + "' AND `Status` = 'Booked'");
+            while (rs.next()) {
+                Excursion_ID = rs.getString("Excursion ID");
+                Port_ID = rs.getString("Port ID");
+                Excursion_Name = rs.getString("Excursion Name");
+                Booked_Seat = rs.getString("Booked Seat");
+                Booked_Date = rs.getString("Booked Date");
+                booking.add(new booking_info(Excursion_ID, Port_ID, Excursion_Name, Booked_Seat, Booked_Date));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -98,7 +116,22 @@ public class Booking_Controller implements Initializable {
 
     public void cancelBooking_Button() throws SQLException {
         if (tableView.getSelectionModel().getSelectedItem() == null) {
-            System.out.println("Select a table");
+            userBooking_StackPane.setVisible(true);
+            JFXDialogLayout content = new JFXDialogLayout();
+            content.setHeading(new Text("Error"));
+            content.setBody(new Text("Select a table"));
+            JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
+
+            JFXButton closeButton = new JFXButton("Close");
+            closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    dialog.close();
+                    userBooking_StackPane.setVisible(false);
+                }
+            });
+            content.setActions(closeButton);
+            dialog.show();
         } else {
             userBooking_StackPane.setVisible(true);
 
@@ -136,6 +169,7 @@ public class Booking_Controller implements Initializable {
                     }
                     dialog.close();
                     userBooking_StackPane.setVisible(false);
+                    refresh();
                 }
             });
             content.setActions(closeButton, okayButton);
@@ -148,16 +182,76 @@ public class Booking_Controller implements Initializable {
 
     public void updateBooking_Add() throws SQLException {
         if (tableView.getSelectionModel().getSelectedItem() == null) {
-            System.out.println("Select a table");
+            userBooking_StackPane.setVisible(true);
+            JFXDialogLayout content = new JFXDialogLayout();
+            content.setHeading(new Text("Error"));
+            content.setBody(new Text("Select a table"));
+            JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
+
+            JFXButton closeButton = new JFXButton("Close");
+            closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    dialog.close();
+                    userBooking_StackPane.setVisible(false);
+                }
+            });
+            content.setActions(closeButton);
+            dialog.show();
         } else {
             if (Update_textfield_Seat.getText().isEmpty()) {
-                System.out.println("TextField is Null");
+                userBooking_StackPane.setVisible(true);
+                JFXDialogLayout content = new JFXDialogLayout();
+                content.setHeading(new Text("Error"));
+                content.setBody(new Text("TextField is Null"));
+                JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
+
+                JFXButton closeButton = new JFXButton("Close");
+                closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        dialog.close();
+                        userBooking_StackPane.setVisible(false);
+                    }
+                });
+                content.setActions(closeButton);
+                dialog.show();
             } else {
                 if (Integer.parseInt(Update_textfield_Seat.getText()) > 32) {
-                    System.out.println("The Seat limit is 32!");
+                    userBooking_StackPane.setVisible(true);
+                    JFXDialogLayout content = new JFXDialogLayout();
+                    content.setHeading(new Text("Error"));
+                    content.setBody(new Text("The Seat limit is 32!"));
+                    JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
+
+                    JFXButton closeButton = new JFXButton("Close");
+                    closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            dialog.close();
+                            userBooking_StackPane.setVisible(false);
+                        }
+                    });
+                    content.setActions(closeButton);
+                    dialog.show();
                 }
                 else if (Integer.parseInt(Update_textfield_Seat.getText())<=0){
-                    System.out.println("Seat cannot be 0");
+                    userBooking_StackPane.setVisible(true);
+                    JFXDialogLayout content = new JFXDialogLayout();
+                    content.setHeading(new Text("Error"));
+                    content.setBody(new Text("Seat cannot be 0"));
+                    JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
+
+                    JFXButton closeButton = new JFXButton("Close");
+                    closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            dialog.close();
+                            userBooking_StackPane.setVisible(false);
+                        }
+                    });
+                    content.setActions(closeButton);
+                    dialog.show();
                 }
                 else {
                     String exSeat = null;
@@ -168,9 +262,39 @@ public class Booking_Controller implements Initializable {
                         exSeat = exSeatRS.getString("Seat");
                     }
                     if (Integer.parseInt(exSeat) <= 0) {
-                        System.out.println("Sorry no Seat Available");
+                        userBooking_StackPane.setVisible(true);
+                        JFXDialogLayout content = new JFXDialogLayout();
+                        content.setHeading(new Text("Error"));
+                        content.setBody(new Text("Sorry no Seat Available"));
+                        JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
+
+                        JFXButton closeButton = new JFXButton("Close");
+                        closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                dialog.close();
+                                userBooking_StackPane.setVisible(false);
+                            }
+                        });
+                        content.setActions(closeButton);
+                        dialog.show();
                     } else if (Integer.parseInt(Update_textfield_Seat.getText()) > Integer.parseInt(exSeat)) {
-                        System.out.println(exSeat + " seat available");
+                        userBooking_StackPane.setVisible(true);
+                        JFXDialogLayout content = new JFXDialogLayout();
+                        content.setHeading(new Text("Error"));
+                        content.setBody(new Text(exSeat + " seat available"));
+                        JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
+
+                        JFXButton closeButton = new JFXButton("Close");
+                        closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                dialog.close();
+                                userBooking_StackPane.setVisible(false);
+                            }
+                        });
+                        content.setActions(closeButton);
+                        dialog.show();
                     } else {
                         userBooking_StackPane.setVisible(true);
 
@@ -205,6 +329,7 @@ public class Booking_Controller implements Initializable {
                                 }
                                 dialog.close();
                                 userBooking_StackPane.setVisible(false);
+                                refresh();
                             }
                         });
                         content.setActions(closeButton, okayButton);
@@ -219,18 +344,78 @@ public class Booking_Controller implements Initializable {
     }
     public void updateBooking_Sub()throws SQLException{
         if (tableView.getSelectionModel().getSelectedItem() == null){
-            System.out.println("Select a table");
+            userBooking_StackPane.setVisible(true);
+            JFXDialogLayout content = new JFXDialogLayout();
+            content.setHeading(new Text("Error"));
+            content.setBody(new Text("Please select a table row"));
+            JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
+
+            JFXButton closeButton = new JFXButton("Close");
+            closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    dialog.close();
+                    userBooking_StackPane.setVisible(false);
+                }
+            });
+            content.setActions(closeButton);
+            dialog.show();
         }
         else{
             if (Update_textfield_Seat.getText().isEmpty()){
-                System.out.println("TextField is Null");
+                userBooking_StackPane.setVisible(true);
+                JFXDialogLayout content = new JFXDialogLayout();
+                content.setHeading(new Text("Error"));
+                content.setBody(new Text("TextField is Null"));
+                JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
+
+                JFXButton closeButton = new JFXButton("Close");
+                closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        dialog.close();
+                        userBooking_StackPane.setVisible(false);
+                    }
+                });
+                content.setActions(closeButton);
+                dialog.show();
             }
             else {
                 if (Integer.parseInt(Update_textfield_Seat.getText()) > 32){
-                    System.out.println("The Seat limit is 32!");
+                    userBooking_StackPane.setVisible(true);
+                    JFXDialogLayout content = new JFXDialogLayout();
+                    content.setHeading(new Text("Error"));
+                    content.setBody(new Text("The Seat limit is 32!"));
+                    JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
+
+                    JFXButton closeButton = new JFXButton("Close");
+                    closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            dialog.close();
+                            userBooking_StackPane.setVisible(false);
+                        }
+                    });
+                    content.setActions(closeButton);
+                    dialog.show();
                 }
                 else if (Integer.parseInt(Update_textfield_Seat.getText())<=0){
-                    System.out.println("Seat cannot be 0");
+                    userBooking_StackPane.setVisible(true);
+                    JFXDialogLayout content = new JFXDialogLayout();
+                    content.setHeading(new Text("Error"));
+                    content.setBody(new Text("Seat cannot be 0"));
+                    JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
+
+                    JFXButton closeButton = new JFXButton("Close");
+                    closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            dialog.close();
+                            userBooking_StackPane.setVisible(false);
+                        }
+                    });
+                    content.setActions(closeButton);
+                    dialog.show();
                 }
                 else {
                     String exSeat = null, boSeat = null;
@@ -244,10 +429,40 @@ public class Booking_Controller implements Initializable {
                         boSeat = boSeatRS.getString("Booked Seat");
                     }
                     if (Integer.parseInt(boSeat) <= 1){
-                        System.out.println("Sorry Seat must be atleast 1.");
+                        userBooking_StackPane.setVisible(true);
+                        JFXDialogLayout content = new JFXDialogLayout();
+                        content.setHeading(new Text("Error"));
+                        content.setBody(new Text("Sorry Seat must be atleast 1"));
+                        JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
+
+                        JFXButton closeButton = new JFXButton("Close");
+                        closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                dialog.close();
+                                userBooking_StackPane.setVisible(false);
+                            }
+                        });
+                        content.setActions(closeButton);
+                        dialog.show();
                     }
                     else if (Integer.parseInt(Update_textfield_Seat.getText())>=Integer.parseInt(boSeat)){
-                        System.out.println(boSeat+" seat in your bookings.");
+                        userBooking_StackPane.setVisible(true);
+                        JFXDialogLayout content = new JFXDialogLayout();
+                        content.setHeading(new Text("Error"));
+                        content.setBody(new Text(boSeat+" seat in your bookings"));
+                        JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
+
+                        JFXButton closeButton = new JFXButton("Close");
+                        closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                dialog.close();
+                                userBooking_StackPane.setVisible(false);
+                            }
+                        });
+                        content.setActions(closeButton);
+                        dialog.show();
                     }
                     else {
                         userBooking_StackPane.setVisible(true);
@@ -284,6 +499,7 @@ public class Booking_Controller implements Initializable {
                                 }
                                 dialog.close();
                                 userBooking_StackPane.setVisible(false);
+                                refresh();
                             }
                         });
                         content.setActions(closeButton, okayButton);

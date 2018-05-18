@@ -185,9 +185,11 @@ public class Register_Controller implements Initializable{
                 mySt.close();
                 JFXSnackbar snackbar = new JFXSnackbar(Register_Pane);
                 snackbar.show("Data sucessfully Inserted", 3000);
+                Error_Password.setVisible(false);
                 Error_Email.setVisible(false);
-                Error_Name.setVisible(false);
                 Error_Empty.setVisible(false);
+                Error_Name.setVisible(false);
+                Error_EmailExist.setVisible(false);
                 Register_FirstName.clear();
                 Register_LastName.clear();
                 Register_Email.clear();

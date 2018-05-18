@@ -48,6 +48,31 @@ public class adminUser_Controller implements Initializable {
 
     @FXML private TableColumn<adminUser_info, String> joinedDate_Column;
 
+    public void refresh(){
+        sample.Controller.Login_Controller login_controller;
+        login_controller = new sample.Controller.Login_Controller();
+        userInfo.clear();
+        try{
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs","root", "");
+            Statement statement = myConn.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM `registration` WHERE `Role`=\"User\" ");
+            while (rs.next()){
+                ID = rs.getString("ID");
+                First_Name = rs.getString("First Name");
+                Last_Name = rs.getString("Last Name");
+                Email = rs.getString("Email");
+                Cabin = rs.getString("Cabin Number");
+                Gender = rs.getString("Gender");
+                Joined_Date = rs.getString("Joined Date");
+                userInfo.add(new adminUser_info(ID,First_Name,Last_Name,Email, Cabin, Gender, Joined_Date));
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userID_Column.setCellValueFactory(new PropertyValueFactory<adminUser_info, String>("ID"));
@@ -88,7 +113,21 @@ public class adminUser_Controller implements Initializable {
 
     public void cancelBooking_Button() throws SQLException {
         if (adminUserTable.getSelectionModel().getSelectedItem() == null) {
-            System.out.println("Select a table");
+            userBooking_StackPane.setVisible(true);
+            JFXDialogLayout content = new JFXDialogLayout();
+            content.setHeading(new Text("Error"));
+            content.setBody(new Text("Select a table"));
+            JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
+            JFXButton closeButton = new JFXButton("Close");
+            closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    dialog.close();
+                    userBooking_StackPane.setVisible(false);
+                }
+            });
+            content.setActions(closeButton);
+            dialog.show();
         } else {
             userBooking_StackPane.setVisible(true);
 
@@ -129,6 +168,7 @@ public class adminUser_Controller implements Initializable {
                     }
                     dialog.close();
                     userBooking_StackPane.setVisible(false);
+                    refresh();
                 }
             });
             content.setActions(closeButton, okayButton);
