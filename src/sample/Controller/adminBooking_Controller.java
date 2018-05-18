@@ -35,7 +35,8 @@ public class adminBooking_Controller implements Initializable {
     @FXML
     private JFXTextField Update_textfield_Seat;
 
-    @FXML private TableView<adminbooking_info> adminBookingTable;
+    @FXML
+    private TableView<adminbooking_info> adminBookingTable;
 
     @FXML
     private TableColumn<adminbooking_info, String> bookingID_Column;
@@ -58,15 +59,14 @@ public class adminBooking_Controller implements Initializable {
     @FXML
     private TableColumn<adminbooking_info, String> bookedDate_Column;
 
-    public void refresh(){
-        sample.Controller.Login_Controller login_controller;
-        login_controller = new sample.Controller.Login_Controller();
+    //For refreshing the table data when some action is performed
+    public void refresh() {
         adminbooking_info.clear();
-        try{
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs","root", "");
+        try {
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
             Statement statement = myConn.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM `booking` WHERE `Status` = \"Waiting\"");
-            while (rs.next()){
+            ResultSet rs = statement.executeQuery("SELECT * FROM `booking` WHERE `Status` = \"Booked\"");
+            while (rs.next()) {
                 Excursion_ID = rs.getString("Excursion ID");
                 Port_ID = rs.getString("Port ID");
                 Excursion_Name = rs.getString("Excursion Name");
@@ -74,10 +74,9 @@ public class adminBooking_Controller implements Initializable {
                 Booked_Date = rs.getString("Booked Date");
                 Booking_ID = rs.getString("Booking ID");
                 Booked_By = rs.getString("Booked By");
-                adminbooking_info.add(new adminbooking_info(Booking_ID, Excursion_Name,Excursion_ID,Port_ID,Booked_Seat,Booked_By, Booked_Date));
+                adminbooking_info.add(new adminbooking_info(Booking_ID, Excursion_Name, Excursion_ID, Port_ID, Booked_Seat, Booked_By, Booked_Date));
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -94,11 +93,11 @@ public class adminBooking_Controller implements Initializable {
         bookedDate_Column.setCellValueFactory(new PropertyValueFactory<adminbooking_info, String>("Booked_Date"));
         adminBookingTable.setItems(getadminBooking());
 
-        try{
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs","root", "");
+        try {
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
             Statement statement = myConn.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM `booking` WHERE `Status` = \"Booked\"");
-            while (rs.next()){
+            while (rs.next()) {
                 Excursion_ID = rs.getString("Excursion ID");
                 Port_ID = rs.getString("Port ID");
                 Excursion_Name = rs.getString("Excursion Name");
@@ -106,10 +105,9 @@ public class adminBooking_Controller implements Initializable {
                 Booked_Date = rs.getString("Booked Date");
                 Booking_ID = rs.getString("Booking ID");
                 Booked_By = rs.getString("Booked By");
-                adminbooking_info.add(new adminbooking_info(Booking_ID, Excursion_Name,Excursion_ID,Port_ID,Booked_Seat,Booked_By, Booked_Date));
+                adminbooking_info.add(new adminbooking_info(Booking_ID, Excursion_Name, Excursion_ID, Port_ID, Booked_Seat, Booked_By, Booked_Date));
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         adminBookingTable.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -119,6 +117,7 @@ public class adminBooking_Controller implements Initializable {
             }
         });
     }
+
 
     public void cancelBooking_Button() throws SQLException {
         if (adminBookingTable.getSelectionModel().getSelectedItem() == null) {
@@ -161,7 +160,7 @@ public class adminBooking_Controller implements Initializable {
                     sample.Controller.Login_Controller login_controller;
                     login_controller = new sample.Controller.Login_Controller();
                     try {
-                        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+                        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
                         Statement statement = myConn.createStatement();
                         ResultSet bookedSeatByUser_RS = statement.executeQuery("SELECT `Booked Seat` FROM `booking` WHERE `Booked By`='" + adminBookingTable.getSelectionModel().getSelectedItem().getBooked_By() + "' AND `Excursion ID`='" + adminBookingTable.getSelectionModel().getSelectedItem().getExcursion_ID() + "' AND `Status` = 'Booked'");
                         while (bookedSeatByUser_RS.next()) {
@@ -236,8 +235,7 @@ public class adminBooking_Controller implements Initializable {
                     });
                     content.setActions(closeButton);
                     dialog.show();
-                }
-                else if (Integer.parseInt(Update_textfield_Seat.getText())<=0){
+                } else if (Integer.parseInt(Update_textfield_Seat.getText()) <= 0) {
                     userBooking_StackPane.setVisible(true);
                     JFXDialogLayout content = new JFXDialogLayout();
                     content.setHeading(new Text("Error"));
@@ -253,10 +251,9 @@ public class adminBooking_Controller implements Initializable {
                     });
                     content.setActions(closeButton);
                     dialog.show();
-                }
-                else {
+                } else {
                     String exSeat = null;
-                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
                     Statement statement = con.createStatement();
                     ResultSet exSeatRS = statement.executeQuery("SELECT `Seat` FROM `excursions` WHERE `ID`='" + adminBookingTable.getSelectionModel().getSelectedItem().getExcursion_ID() + "'");
                     while (exSeatRS.next()) {
@@ -319,7 +316,7 @@ public class adminBooking_Controller implements Initializable {
                                 sample.Controller.Login_Controller login_controller;
                                 login_controller = new sample.Controller.Login_Controller();
                                 try {
-                                    Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+                                    Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
                                     Statement statement = myConn.createStatement();
                                     statement.execute("UPDATE `booking` SET `Booked Seat`= `Booked Seat` +'" + Integer.parseInt(Update_textfield_Seat.getText()) + "'WHERE `Excursion ID`='" + adminBookingTable.getSelectionModel().getSelectedItem().getExcursion_ID() + "'AND `Booked By`='" + adminBookingTable.getSelectionModel().getSelectedItem().getBooked_By() + "'AND `Status` = 'Booked'");
                                     statement.execute("UPDATE `excursions` SET `Seat`=`Seat`-'" + Integer.parseInt(Update_textfield_Seat.getText()) + "' WHERE `ID` = '" + adminBookingTable.getSelectionModel().getSelectedItem().getExcursion_ID() + "'");
@@ -342,8 +339,8 @@ public class adminBooking_Controller implements Initializable {
 
     }
 
-    public void updateBooking_Sub()throws SQLException{
-        if (adminBookingTable.getSelectionModel().getSelectedItem() == null){
+    public void updateBooking_Sub() throws SQLException {
+        if (adminBookingTable.getSelectionModel().getSelectedItem() == null) {
             userBooking_StackPane.setVisible(true);
             JFXDialogLayout content = new JFXDialogLayout();
             content.setHeading(new Text("Cancel"));
@@ -359,9 +356,8 @@ public class adminBooking_Controller implements Initializable {
             });
             content.setActions(closeButton);
             dialog.show();
-        }
-        else{
-            if (Update_textfield_Seat.getText().isEmpty()){
+        } else {
+            if (Update_textfield_Seat.getText().isEmpty()) {
                 userBooking_StackPane.setVisible(true);
                 JFXDialogLayout content = new JFXDialogLayout();
                 content.setHeading(new Text("Error"));
@@ -377,9 +373,8 @@ public class adminBooking_Controller implements Initializable {
                 });
                 content.setActions(closeButton);
                 dialog.show();
-            }
-            else {
-                if (Integer.parseInt(Update_textfield_Seat.getText()) > 32){
+            } else {
+                if (Integer.parseInt(Update_textfield_Seat.getText()) > 32) {
                     userBooking_StackPane.setVisible(true);
                     JFXDialogLayout content = new JFXDialogLayout();
                     content.setHeading(new Text("Error"));
@@ -395,8 +390,7 @@ public class adminBooking_Controller implements Initializable {
                     });
                     content.setActions(closeButton);
                     dialog.show();
-                }
-                else if (Integer.parseInt(Update_textfield_Seat.getText())<=0){
+                } else if (Integer.parseInt(Update_textfield_Seat.getText()) <= 0) {
                     userBooking_StackPane.setVisible(true);
                     JFXDialogLayout content = new JFXDialogLayout();
                     content.setHeading(new Text("Error"));
@@ -412,16 +406,15 @@ public class adminBooking_Controller implements Initializable {
                     });
                     content.setActions(closeButton);
                     dialog.show();
-                }
-                else {
+                } else {
                     String boSeat = null;
-                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs","root", "");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
                     Statement statement = con.createStatement();
-                    ResultSet boSeatRS = statement.executeQuery("SELECT `Booked Seat` FROM `booking` WHERE `Excursion ID`='"+adminBookingTable.getSelectionModel().getSelectedItem().getExcursion_ID()+"'AND `Booked By`='"+adminBookingTable.getSelectionModel().getSelectedItem().getBooked_By()+"'AND `Status` = 'Booked'");
-                    while (boSeatRS.next()){
+                    ResultSet boSeatRS = statement.executeQuery("SELECT `Booked Seat` FROM `booking` WHERE `Excursion ID`='" + adminBookingTable.getSelectionModel().getSelectedItem().getExcursion_ID() + "'AND `Booked By`='" + adminBookingTable.getSelectionModel().getSelectedItem().getBooked_By() + "'AND `Status` = 'Booked'");
+                    while (boSeatRS.next()) {
                         boSeat = boSeatRS.getString("Booked Seat");
                     }
-                    if (Integer.parseInt(boSeat) <= 1){
+                    if (Integer.parseInt(boSeat) <= 1) {
                         userBooking_StackPane.setVisible(true);
                         JFXDialogLayout content = new JFXDialogLayout();
                         content.setHeading(new Text("Error"));
@@ -437,12 +430,11 @@ public class adminBooking_Controller implements Initializable {
                         });
                         content.setActions(closeButton);
                         dialog.show();
-                    }
-                    else if (Integer.parseInt(Update_textfield_Seat.getText())>=Integer.parseInt(boSeat)){
+                    } else if (Integer.parseInt(Update_textfield_Seat.getText()) >= Integer.parseInt(boSeat)) {
                         userBooking_StackPane.setVisible(true);
                         JFXDialogLayout content = new JFXDialogLayout();
                         content.setHeading(new Text("Error"));
-                        content.setBody(new Text(boSeat+" seat in your bookings."));
+                        content.setBody(new Text(boSeat + " seat in your bookings."));
                         JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
                         JFXButton closeButton = new JFXButton("Close");
                         closeButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -454,13 +446,12 @@ public class adminBooking_Controller implements Initializable {
                         });
                         content.setActions(closeButton);
                         dialog.show();
-                    }
-                    else {
+                    } else {
                         userBooking_StackPane.setVisible(true);
 
                         JFXDialogLayout content = new JFXDialogLayout();
                         content.setHeading(new Text("Update Seat"));
-                        content.setBody(new Text("Confirm Substract "+Update_textfield_Seat.getText()+" Seats?"));
+                        content.setBody(new Text("Confirm Substract " + Update_textfield_Seat.getText() + " Seats?"));
                         JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
 
                         JFXButton closeButton = new JFXButton("Close");
@@ -475,17 +466,13 @@ public class adminBooking_Controller implements Initializable {
                         JFXButton okayButton = new JFXButton("Okay");
                         okayButton.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
-                            public void handle(ActionEvent event){
-                                String bookedSeatByUser = null;
-                                sample.Controller.Login_Controller login_controller;
-                                login_controller = new sample.Controller.Login_Controller();
+                            public void handle(ActionEvent event) {
                                 try {
-                                    Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs","root", "");
+                                    Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
                                     Statement statement = myConn.createStatement();
-                                    statement.execute("UPDATE `booking` SET `Booked Seat`= `Booked Seat` -'"+Integer.parseInt(Update_textfield_Seat.getText())+"'WHERE `Excursion ID`='"+adminBookingTable.getSelectionModel().getSelectedItem().getExcursion_ID()+"'AND `Booked By`='"+adminBookingTable.getSelectionModel().getSelectedItem().getBooked_By()+"' AND `Status` = 'Booked'");
-                                    statement.execute("UPDATE `excursions` SET `Seat`=`Seat`+'"+Integer.parseInt(Update_textfield_Seat.getText())+"' WHERE `ID` = '"+adminBookingTable.getSelectionModel().getSelectedItem().getExcursion_ID()+"'");
-                                }
-                                catch (SQLException e){
+                                    statement.execute("UPDATE `booking` SET `Booked Seat`= `Booked Seat` -'" + Integer.parseInt(Update_textfield_Seat.getText()) + "'WHERE `Excursion ID`='" + adminBookingTable.getSelectionModel().getSelectedItem().getExcursion_ID() + "'AND `Booked By`='" + adminBookingTable.getSelectionModel().getSelectedItem().getBooked_By() + "' AND `Status` = 'Booked'");
+                                    statement.execute("UPDATE `excursions` SET `Seat`=`Seat`+'" + Integer.parseInt(Update_textfield_Seat.getText()) + "' WHERE `ID` = '" + adminBookingTable.getSelectionModel().getSelectedItem().getExcursion_ID() + "'");
+                                } catch (SQLException e) {
                                     e.printStackTrace();
                                 }
                                 dialog.close();
@@ -505,7 +492,7 @@ public class adminBooking_Controller implements Initializable {
 
     }
 
-    public ObservableList<adminbooking_info> getadminBooking(){
+    public ObservableList<adminbooking_info> getadminBooking() {
         adminbooking_info = FXCollections.observableArrayList();
         return adminbooking_info;
     }

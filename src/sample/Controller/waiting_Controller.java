@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 
 public class waiting_Controller implements Initializable {
     private static String Excursion_ID, Port_ID, Excursion_Name, Booked_Seat, Booked_Date;
-    private static ObservableList<booking_info> booking;
+    private static ObservableList<waiting_info> booking;
 
     @FXML
     private Label Cancel_ID;
@@ -36,38 +36,39 @@ public class waiting_Controller implements Initializable {
     private JFXTextField Update_textfield_Seat;
 
     @FXML
-    private TableView<booking_info> tableView;
+    private TableView<waiting_info> tableView;
 
     @FXML
-    private TableColumn<booking_info, String> ExcursionID_Column;
+    private TableColumn<waiting_info, String> ExcursionID_Column;
 
     @FXML
-    private TableColumn<booking_info, String> PortID_Column;
+    private TableColumn<waiting_info, String> PortID_Column;
 
     @FXML
-    private TableColumn<booking_info, String> ExcursionName_Column;
+    private TableColumn<waiting_info, String> ExcursionName_Column;
 
     @FXML
-    private TableColumn<booking_info, String> SeatNo_Column;
+    private TableColumn<waiting_info, String> SeatNo_Column;
 
     @FXML
-    private TableColumn<booking_info, String> BookedDate_Column;
+    private TableColumn<waiting_info, String> BookedDate_Column;
 
-    public void refresh(){
+    //For refreshing the table data when some action is performed
+    public void refresh() {
         sample.Controller.Login_Controller login_controller;
         login_controller = new sample.Controller.Login_Controller();
         booking.clear();
         try {
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
             Statement statement = myConn.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM `booking` WHERE `Booked By` = '" + login_controller.loggedInID + "' AND `Status` = 'Booked'");
+            ResultSet rs = statement.executeQuery("SELECT * FROM `booking` WHERE `Booked By` = '" + login_controller.loggedInID + "' AND `Status` = 'Waiting'");
             while (rs.next()) {
                 Excursion_ID = rs.getString("Excursion ID");
                 Port_ID = rs.getString("Port ID");
                 Excursion_Name = rs.getString("Excursion Name");
                 Booked_Seat = rs.getString("Booked Seat");
                 Booked_Date = rs.getString("Booked Date");
-                booking.add(new booking_info(Excursion_ID, Port_ID, Excursion_Name, Booked_Seat, Booked_Date));
+                booking.add(new waiting_info(Excursion_ID, Port_ID, Excursion_Name, Booked_Seat, Booked_Date));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -79,16 +80,16 @@ public class waiting_Controller implements Initializable {
         sample.Controller.Login_Controller login_controller;
         login_controller = new sample.Controller.Login_Controller();
 
-        ExcursionID_Column.setCellValueFactory(new PropertyValueFactory<booking_info, String>("Excursion_ID"));
-        PortID_Column.setCellValueFactory(new PropertyValueFactory<booking_info, String>("Port_ID"));
-        ExcursionName_Column.setCellValueFactory(new PropertyValueFactory<booking_info, String>("Excursion_Name"));
-        SeatNo_Column.setCellValueFactory(new PropertyValueFactory<booking_info, String>("Booked_Seat"));
-        BookedDate_Column.setCellValueFactory(new PropertyValueFactory<booking_info, String>("Booked_Date"));
+        ExcursionID_Column.setCellValueFactory(new PropertyValueFactory<waiting_info, String>("Excursion_ID"));
+        PortID_Column.setCellValueFactory(new PropertyValueFactory<waiting_info, String>("Port_ID"));
+        ExcursionName_Column.setCellValueFactory(new PropertyValueFactory<waiting_info, String>("Excursion_Name"));
+        SeatNo_Column.setCellValueFactory(new PropertyValueFactory<waiting_info, String>("Booked_Seat"));
+        BookedDate_Column.setCellValueFactory(new PropertyValueFactory<waiting_info, String>("Booked_Date"));
 
-        tableView.setItems(getBooking());
+        tableView.setItems(getWaiting());
 
         try {
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
             Statement statement = myConn.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM `booking` WHERE `Booked By` = '" + login_controller.loggedInID + "' AND `Status` = 'Waiting'");
             while (rs.next()) {
@@ -97,7 +98,7 @@ public class waiting_Controller implements Initializable {
                 Excursion_Name = rs.getString("Excursion Name");
                 Booked_Seat = rs.getString("Booked Seat");
                 Booked_Date = rs.getString("Booked Date");
-                booking.add(new booking_info(Excursion_ID, Port_ID, Excursion_Name, Booked_Seat, Booked_Date));
+                booking.add(new waiting_info(Excursion_ID, Port_ID, Excursion_Name, Booked_Seat, Booked_Date));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -149,11 +150,10 @@ public class waiting_Controller implements Initializable {
             okayButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    String bookedSeatByUser = null;
                     sample.Controller.Login_Controller login_controller;
                     login_controller = new sample.Controller.Login_Controller();
                     try {
-                        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+                        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
                         Statement statement = myConn.createStatement();
                         statement.execute("UPDATE `booking` SET `Status`='Cancelled' WHERE `Booked By`='" + login_controller.loggedInID + "' AND `Excursion ID`='" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'AND `Status` = 'Waiting'");
                     } catch (SQLException e) {
@@ -265,7 +265,7 @@ public class waiting_Controller implements Initializable {
                             sample.Controller.Login_Controller login_controller;
                             login_controller = new sample.Controller.Login_Controller();
                             try {
-                                Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+                                Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
                                 Statement statement = myConn.createStatement();
                                 statement.execute("UPDATE `booking` SET `Booked Seat`= `Booked Seat` +'" + Integer.parseInt(Update_textfield_Seat.getText()) + "'WHERE `Excursion ID`='" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'AND `Booked By`='" + login_controller.loggedInID + "'AND `Status` = 'Waiting'");
                             } catch (SQLException e) {
@@ -377,11 +377,10 @@ public class waiting_Controller implements Initializable {
                     okayButton.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
-                            String bookedSeatByUser = null;
                             sample.Controller.Login_Controller login_controller;
                             login_controller = new sample.Controller.Login_Controller();
                             try {
-                                Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+                                Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
                                 Statement statement = myConn.createStatement();
                                 statement.execute("UPDATE `booking` SET `Booked Seat`= `Booked Seat` -'" + Integer.parseInt(Update_textfield_Seat.getText()) + "'WHERE `Excursion ID`='" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'AND `Booked By`='" + login_controller.loggedInID + "'AND `Status` = 'Waiting'");
                             } catch (SQLException e) {
@@ -402,7 +401,7 @@ public class waiting_Controller implements Initializable {
     }
 
 
-    public ObservableList<booking_info> getBooking() {
+    public ObservableList<waiting_info> getWaiting() {
         booking = FXCollections.observableArrayList();
         return booking;
     }

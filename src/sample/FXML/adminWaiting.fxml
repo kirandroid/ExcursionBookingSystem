@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="462.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.adminWaiting_Controller">
@@ -24,5 +26,17 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <JFXButton layoutX="14.0" layoutY="423.0" onAction="#cancelBooking_Button" styleClass="Loginbutton" stylesheets="@../Style/stylesheet.css" text="Cancel Booking" />
+      <Label fx:id="Cancel_ID" layoutX="153.0" layoutY="426.0" prefHeight="20.0" prefWidth="74.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="125.0" layoutY="426.0" text="ID :  ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <StackPane fx:id="userBooking_StackPane" prefHeight="462.0" prefWidth="554.0" visible="false" />
    </children>
 </AnchorPane>

@@ -127,7 +127,6 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <StackPane fx:id="welcome_StackPane" layoutY="72.0" prefHeight="363.0" prefWidth="600.0" visible="false" />
       <Label text="WELCOME">
          <font>
             <Font size="38.0" />
@@ -161,5 +160,6 @@
             </Text>
          </children>
       </AnchorPane>
+      <StackPane fx:id="welcome_StackPane" layoutY="72.0" prefHeight="363.0" prefWidth="600.0" visible="false" />
    </children>
 </AnchorPane>

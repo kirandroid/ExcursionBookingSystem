@@ -3,9 +3,9 @@ package sample.Controller;
 import javafx.beans.property.SimpleStringProperty;
 
 public class booking_info {
-    private SimpleStringProperty Excursion_ID, Port_ID, Excursion_Name, Booked_Seat,Booked_Date;
+    private SimpleStringProperty Excursion_ID, Port_ID, Excursion_Name, Booked_Seat, Booked_Date;
 
-    public booking_info(String Excursion_ID, String Port_ID, String Excursion_Name, String Booked_Seat, String Booked_Date){
+    public booking_info(String Excursion_ID, String Port_ID, String Excursion_Name, String Booked_Seat, String Booked_Date) {
         this.Excursion_ID = new SimpleStringProperty(Excursion_ID);
         this.Port_ID = new SimpleStringProperty(Port_ID);
         this.Excursion_Name = new SimpleStringProperty(Excursion_Name);

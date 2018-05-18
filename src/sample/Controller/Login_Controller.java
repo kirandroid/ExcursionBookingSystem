@@ -23,7 +23,7 @@ public class Login_Controller implements Initializable {
     public static String loggedInFirstName, loggedInID, loggedUsername;
 
     @FXML
-    private void Minimize_App(MouseEvent event){
+    private void Minimize_App(MouseEvent event) {
         Main.stage.setIconified(true);
     }
 
@@ -40,13 +40,13 @@ public class Login_Controller implements Initializable {
     private AnchorPane Login_pane, login_rootpane;
 
     @FXML
-    private void Close_App(MouseEvent event){
+    private void Close_App(MouseEvent event) {
         System.exit(0);
     }
 
     //logs in user on button clicked, yeah!
-    public void LoginButtonClicked(){
-        try{
+    public void LoginButtonClicked() {
+        try {
             loggedUsername = Login_Username.getText();
 
             //This code changes the password entered by user to a hashed SHA1 text.
@@ -55,7 +55,7 @@ public class Login_Controller implements Initializable {
             String encriptedPassword = DatatypeConverter.printHexBinary(messageDigest.digest());
             //The hashed text will then be compared to the password in the database.
 
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
             String sql = "SELECT * from registration where Email=? and Password = ? and Role = ?";
             PreparedStatement myStUser = myConn.prepareStatement(sql);
 
@@ -71,34 +71,32 @@ public class Login_Controller implements Initializable {
             ResultSet rsAd = myStAdmin.executeQuery();
 
             //Checks for user login, if matched changes the scene to user profile
-            if(rs.next()){
+            if (rs.next()) {
                 AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/profile.fxml"));
                 login_rootpane.getChildren().setAll(pane);
                 sample.Controller.welcome_controller welcomeController;
                 welcomeController = new sample.Controller.welcome_controller();
-                welcomeController.isLoggedIn =true;
+                welcomeController.isLoggedIn = true;
                 Statement statement = myConn.createStatement();
-                ResultSet firstnameset = statement.executeQuery("SELECT `First Name`, `ID` FROM `registration` WHERE `Email` ='"+Login_Username.getText()+"'");
+                ResultSet firstnameset = statement.executeQuery("SELECT `First Name`, `ID` FROM `registration` WHERE `Email` ='" + Login_Username.getText() + "'");
                 while (firstnameset.next()) {
                     loggedInFirstName = firstnameset.getString("First Name");
                     loggedInID = firstnameset.getString("ID");
                 }
             }
             //Checks for Admin login, if matched changes the scene to Admin panel
-            else if (rsAd.next()){
+            else if (rsAd.next()) {
                 AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/Admin_Panel.fxml"));
                 login_rootpane.getChildren().setAll(pane);
-            }
-            else
+            } else
                 ErrorLogin_Label.setVisible(true);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     //function to change the scene to Register scene
-    public void goTo_Register() throws IOException{
+    public void goTo_Register() throws IOException {
         AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/Register.fxml"));
         Login_pane.getChildren().setAll(pane);
 
@@ -113,8 +111,8 @@ public class Login_Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Login_Password.setOnKeyPressed(e  ->{
-            if(e.getCode() == KeyCode.ENTER){
+        Login_Password.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
                 LoginButtonClicked();
             }
         });

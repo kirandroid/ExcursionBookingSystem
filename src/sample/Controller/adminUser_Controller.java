@@ -48,12 +48,11 @@ public class adminUser_Controller implements Initializable {
 
     @FXML private TableColumn<adminUser_info, String> joinedDate_Column;
 
+    //For refreshing the table data when some action is performed
     public void refresh(){
-        sample.Controller.Login_Controller login_controller;
-        login_controller = new sample.Controller.Login_Controller();
         userInfo.clear();
         try{
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs","root", "");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8","root", "");
             Statement statement = myConn.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM `registration` WHERE `Role`=\"User\" ");
             while (rs.next()){
@@ -86,7 +85,7 @@ public class adminUser_Controller implements Initializable {
         adminUserTable.setItems(getUsers());
 
         try{
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs","root", "");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8","root", "");
             Statement statement = myConn.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM `registration` WHERE `Role`=\"User\" ");
             while (rs.next()){
@@ -150,7 +149,7 @@ public class adminUser_Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     String exID = null, bookedSeat = null;
                     try {
-                        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+                        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
                         Statement statement = myConn.createStatement();
                         Statement upSt = myConn.createStatement();
 

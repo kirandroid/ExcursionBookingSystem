@@ -3,9 +3,9 @@ package sample.Controller;
 import javafx.beans.property.SimpleStringProperty;
 
 public class adminUser_info {
-    private SimpleStringProperty ID, First_Name, Last_Name, Email,Cabin, Gender, Joined_Date;
+    private SimpleStringProperty ID, First_Name, Last_Name, Email, Cabin, Gender, Joined_Date;
 
-    public adminUser_info(String ID, String First_Name, String Last_Name, String Email, String Cabin, String Gender, String Joined_Date){
+    public adminUser_info(String ID, String First_Name, String Last_Name, String Email, String Cabin, String Gender, String Joined_Date) {
         this.ID = new SimpleStringProperty(ID);
         this.First_Name = new SimpleStringProperty(First_Name);
         this.Last_Name = new SimpleStringProperty(Last_Name);
@@ -55,19 +55,19 @@ public class adminUser_info {
         this.Cabin = Cabin;
     }
 
-    public String getGender(){
-        return  Gender.get();
+    public String getGender() {
+        return Gender.get();
     }
 
-    public void setGender(SimpleStringProperty Gender){
+    public void setGender(SimpleStringProperty Gender) {
         this.Gender = Gender;
     }
 
-    public String getJoined_Date(){
+    public String getJoined_Date() {
         return Joined_Date.get();
     }
 
-    public void setJoined_Date(SimpleStringProperty Joined_Date){
+    public void setJoined_Date(SimpleStringProperty Joined_Date) {
         this.Joined_Date = Joined_Date;
     }
 }

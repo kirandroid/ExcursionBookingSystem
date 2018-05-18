@@ -45,7 +45,6 @@
                   <Font name="System Bold" size="41.0" />
                </font>
             </Label>
-            <StackPane fx:id="welcome_StackPane" prefHeight="500.0" prefWidth="600.0" visible="false" />
             <AnchorPane fx:id="Search_Main_Pane" layoutY="65.0" prefHeight="435.0" prefWidth="600.0">
                <children>
                   <AnchorPane layoutY="72.0" prefHeight="363.0" prefWidth="600.0">
@@ -188,5 +187,6 @@
                </children>
             </AnchorPane>
          </children></AnchorPane>
+      <StackPane fx:id="welcome_StackPane" layoutX="200.0" prefHeight="500.0" prefWidth="600.0" visible="false" />
    </children>
 </AnchorPane>

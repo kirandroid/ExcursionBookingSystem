@@ -55,12 +55,13 @@ public class Booking_Controller implements Initializable {
     @FXML
     private TableColumn<booking_info, String> BookedDate_Column;
 
+    //For refreshing the table data when some action is performed
     public void refresh(){
         sample.Controller.Login_Controller login_controller;
         login_controller = new sample.Controller.Login_Controller();
         booking.clear();
         try {
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
             Statement statement = myConn.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM `booking` WHERE `Booked By` = '" + login_controller.loggedInID + "' AND `Status` = 'Booked'");
             while (rs.next()) {
@@ -91,7 +92,7 @@ public class Booking_Controller implements Initializable {
         tableView.setItems(getBooking());
 
         try {
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
             Statement statement = myConn.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM `booking` WHERE `Booked By` = '" + login_controller.loggedInID + "' AND `Status` = 'Booked'");
             while (rs.next()) {
@@ -156,7 +157,7 @@ public class Booking_Controller implements Initializable {
                     sample.Controller.Login_Controller login_controller;
                     login_controller = new sample.Controller.Login_Controller();
                     try {
-                        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+                        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
                         Statement statement = myConn.createStatement();
                         statement.execute("UPDATE `booking` SET `Status`='Cancelled' WHERE `Booked By`='" + login_controller.loggedInID + "' AND `Excursion ID`='" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'AND `Status` = 'Booked'");
                         ResultSet bookedSeatByUser_RS = statement.executeQuery("SELECT `Booked Seat` FROM `booking` WHERE `Booked By`='" + login_controller.loggedInID + "' AND `Excursion ID`='" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'");
@@ -255,7 +256,7 @@ public class Booking_Controller implements Initializable {
                 }
                 else {
                     String exSeat = null;
-                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
                     Statement statement = con.createStatement();
                     ResultSet exSeatRS = statement.executeQuery("SELECT `Seat` FROM `excursions` WHERE `ID`='" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'");
                     while (exSeatRS.next()) {
@@ -320,7 +321,7 @@ public class Booking_Controller implements Initializable {
                                 sample.Controller.Login_Controller login_controller;
                                 login_controller = new sample.Controller.Login_Controller();
                                 try {
-                                    Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+                                    Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
                                     Statement statement = myConn.createStatement();
                                     statement.execute("UPDATE `booking` SET `Booked Seat`= `Booked Seat` +'" + Integer.parseInt(Update_textfield_Seat.getText()) + "'WHERE `Excursion ID`='" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'AND `Booked By`='" + login_controller.loggedInID + "'AND `Status` = 'Booked'");
                                     statement.execute("UPDATE `excursions` SET `Seat`=`Seat`-'" + Integer.parseInt(Update_textfield_Seat.getText()) + "' WHERE `ID` = '" + tableView.getSelectionModel().getSelectedItem().getExcursion_ID() + "'");
@@ -418,11 +419,11 @@ public class Booking_Controller implements Initializable {
                     dialog.show();
                 }
                 else {
-                    String exSeat = null, boSeat = null;
+                    String boSeat = null;
                     sample.Controller.Login_Controller login_controller;
                     login_controller = new sample.Controller.Login_Controller();
 
-                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs","root", "");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8","root", "");
                     Statement statement = con.createStatement();
                     ResultSet boSeatRS = statement.executeQuery("SELECT `Booked Seat` FROM `booking` WHERE `Excursion ID`='"+tableView.getSelectionModel().getSelectedItem().getExcursion_ID()+"'AND `Booked By`='"+login_controller.loggedInID+"'AND `Status` = 'Booked'");
                     while (boSeatRS.next()){
@@ -450,7 +451,7 @@ public class Booking_Controller implements Initializable {
                         userBooking_StackPane.setVisible(true);
                         JFXDialogLayout content = new JFXDialogLayout();
                         content.setHeading(new Text("Error"));
-                        content.setBody(new Text(boSeat+" seat in your bookings"));
+                        content.setBody(new Text(boSeat + " seat in your bookings"));
                         JFXDialog dialog = new JFXDialog(userBooking_StackPane, content, JFXDialog.DialogTransition.CENTER);
 
                         JFXButton closeButton = new JFXButton("Close");
@@ -485,11 +486,10 @@ public class Booking_Controller implements Initializable {
                         okayButton.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent event){
-                                String bookedSeatByUser = null;
                                 sample.Controller.Login_Controller login_controller;
                                 login_controller = new sample.Controller.Login_Controller();
                                 try {
-                                    Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs","root", "");
+                                    Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8","root", "");
                                     Statement statement = myConn.createStatement();
                                     statement.execute("UPDATE `booking` SET `Booked Seat`= `Booked Seat` -'"+Integer.parseInt(Update_textfield_Seat.getText())+"'WHERE `Excursion ID`='"+tableView.getSelectionModel().getSelectedItem().getExcursion_ID()+"'AND `Booked By`='"+login_controller.loggedInID+"' AND `Status` = 'Booked'");
                                     statement.execute("UPDATE `excursions` SET `Seat`=`Seat`+'"+Integer.parseInt(Update_textfield_Seat.getText())+"' WHERE `ID` = '"+tableView.getSelectionModel().getSelectedItem().getExcursion_ID()+"'");

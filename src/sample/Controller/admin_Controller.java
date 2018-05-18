@@ -18,11 +18,12 @@ public class admin_Controller {
     private Label adminPane_Greeting;
 
     @FXML
-    private void Minimize_App(MouseEvent event){
+    private void Minimize_App(MouseEvent event) {
         Main.stage.setIconified(true);
     }
+
     @FXML
-    private void Close_App(MouseEvent event){
+    private void Close_App(MouseEvent event) {
         System.exit(0);
     }
 
@@ -30,27 +31,27 @@ public class admin_Controller {
     private void LogOut(MouseEvent event) throws IOException {
         sample.Controller.welcome_controller welcomeController;
         welcomeController = new sample.Controller.welcome_controller();
-        welcomeController.isLoggedIn =false;
+        welcomeController.isLoggedIn = false;
         AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/welcome.fxml"));
         adminPane.getChildren().setAll(pane);
     }
 
     @FXML
-    void adminPane_UserClicked(ActionEvent event) throws IOException{
+    void adminPane_UserClicked(ActionEvent event) throws IOException {
         adminPane_Greeting.setVisible(false);
         AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/adminUser.fxml"));
         adminPane_TablePane.getChildren().setAll(pane);
     }
 
     @FXML
-    void adminPane_BookingClicked(ActionEvent event) throws IOException{
+    void adminPane_BookingClicked(ActionEvent event) throws IOException {
         adminPane_Greeting.setVisible(false);
         AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/adminBooking.fxml"));
         adminPane_TablePane.getChildren().setAll(pane);
     }
 
     @FXML
-    void adminPane_WaitingClicked(ActionEvent event) throws IOException{
+    void adminPane_WaitingClicked(ActionEvent event) throws IOException {
         adminPane_Greeting.setVisible(false);
         AnchorPane pane = FXMLLoader.load(getClass().getResource("../FXML/adminWaiting.fxml"));
         adminPane_TablePane.getChildren().setAll(pane);

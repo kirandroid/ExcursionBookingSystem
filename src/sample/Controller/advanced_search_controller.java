@@ -18,7 +18,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import sample.Main;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,8 +25,7 @@ import java.util.ResourceBundle;
 
 public class advanced_search_controller implements Initializable {
 
-    private String Seat = null, Total_Seat = null, check_excursion_ID, Text_Recommended_Place1= null, Text_Recommended_Place2 = null;
-    private String id = null, port = null, name = null;
+    private String Seat = null, Total_Seat = null, check_excursion_ID, Text_Recommended_Place1 = null, Text_Recommended_Place2 = null, id = null, port = null, name = null;
 
     @FXML
     private Label ExcursionName_BasicSearch, ExcursionID_BasicSearch, PortID_BasicSearch, sliderNo, RemainingSeat, Recommended_Place1, Recommended_Place2;
@@ -47,48 +45,51 @@ public class advanced_search_controller implements Initializable {
     @FXML
     public ComboBox PortID_box_ID, ExcursionID_box_ID, Excursionname_box_ID;
 
-    public void Places_Pane1_Clicked(){
+    public void Places_Pane1_Clicked() {
         home_recommended_place.setVisible(false);
         Pane_ADVSearchResult.setVisible(true);
 
         try {
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
             Statement statement = myConn.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT `Name`,`PORT_ID`, `Seat` FROM `excursions` WHERE `ID`= '"+Text_Recommended_Place1+"'");
-            while (rs.next()){
+            ResultSet rs = statement.executeQuery("SELECT * FROM `excursions` WHERE `ID`= '" + Text_Recommended_Place1 + "'");
+            while (rs.next()) {
                 name = rs.getString("Name");
                 port = rs.getString("PORT_ID");
                 Seat = rs.getString("Seat");
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
+
+        id = Text_Recommended_Place1;
         ExcursionName_BasicSearch.setText(name);
         ExcursionID_BasicSearch.setText(Text_Recommended_Place1);
         PortID_BasicSearch.setText(port);
         RemainingSeat.setText(Seat);
     }
 
-    public void Places_Pane2_Clicked(){
+    public void Places_Pane2_Clicked() {
         home_recommended_place.setVisible(false);
         Pane_ADVSearchResult.setVisible(true);
 
         try {
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
             Statement statement = myConn.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT `Name`,`PORT_ID`, `Seat` FROM `excursions` WHERE `ID`= '"+Text_Recommended_Place2+"'");
-            while (rs.next()){
+            ResultSet rs = statement.executeQuery("SELECT `Name`,`PORT_ID`, `Seat` FROM `excursions` WHERE `ID`= '" + Text_Recommended_Place2 + "'");
+            while (rs.next()) {
                 name = rs.getString("Name");
                 port = rs.getString("PORT_ID");
                 Seat = rs.getString("Seat");
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
+        id = Text_Recommended_Place2;
         ExcursionName_BasicSearch.setText(name);
         ExcursionID_BasicSearch.setText(Text_Recommended_Place2);
         PortID_BasicSearch.setText(port);
@@ -112,7 +113,7 @@ public class advanced_search_controller implements Initializable {
     public String[] PortID_comboresult() {
         ArrayList<String> results = new ArrayList<String>();
         try {
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
             Statement statement = myConn.createStatement();
             ResultSet rs = statement.executeQuery("SELECT DISTINCT `PORT_ID` FROM `excursions`");
             while (rs.next()) {
@@ -129,7 +130,7 @@ public class advanced_search_controller implements Initializable {
     public String[] ExcursionName_comboresult() {
         ArrayList<String> results = new ArrayList<String>();
         try {
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
             Statement statement = myConn.createStatement();
             ResultSet rs = statement.executeQuery("SELECT `NAME` FROM `excursions` WHERE `PORT_ID` ='" + PortID_box_ID.getValue() + "'");
             while (rs.next()) {
@@ -146,7 +147,7 @@ public class advanced_search_controller implements Initializable {
     public String[] ExcursionID_comboresult() {
         ArrayList<String> results = new ArrayList<String>();
         try {
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
             Statement statement = myConn.createStatement();
             ResultSet rs = statement.executeQuery("SELECT `ID` FROM `excursions` WHERE `NAME` ='" + Excursionname_box_ID.getValue() + "'");
             while (rs.next()) {
@@ -168,7 +169,7 @@ public class advanced_search_controller implements Initializable {
 
     @FXML
     public void SearchResult_Basic(MouseEvent event) throws SQLException {
-        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
         Statement statement = myConn.createStatement();
         ResultSet rs = statement.executeQuery("SELECT `Seat`, `PORT_ID`, `Name`, `ID` FROM `excursions` WHERE `ID` ='" + ExcursionID_box_ID.getValue() + "'");
         while (rs.next()) {
@@ -207,17 +208,17 @@ public class advanced_search_controller implements Initializable {
             Error_doLogin.setVisible(true);
         } else if (welcomeController.isLoggedIn == true) {
             try {
-                Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
+                Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
                 Statement statement = myConn.createStatement();
-                ResultSet rs = statement.executeQuery("SELECT `Seat` FROM `excursions` WHERE `ID` ='" + ExcursionID_box_ID.getValue() + "'");
+                ResultSet rs = statement.executeQuery("SELECT `Seat` FROM `excursions` WHERE `ID` ='" + id + "'");
                 while (rs.next()) {
                     Total_Seat = rs.getString("Seat");
                 }
-                ResultSet rs2 = statement.executeQuery("SELECT  `Excursion ID` FROM `booking` WHERE `Booked By` = '"+login_controller.loggedInID+"'");
-                while (rs2.next()){
+                ResultSet rs2 = statement.executeQuery("SELECT  `Excursion ID` FROM `booking` WHERE `Booked By` = '" + login_controller.loggedInID + "'");
+                while (rs2.next()) {
                     check_excursion_ID = rs2.getString("Excursion ID");
                 }
-                if (ExcursionID_box_ID.getValue().toString().equals(check_excursion_ID)){
+                if (id.equals(check_excursion_ID)) {
                     welcome_StackPane.setVisible(true);
                     JFXDialogLayout content = new JFXDialogLayout();
                     content.setHeading(new Text("Error"));
@@ -234,8 +235,7 @@ public class advanced_search_controller implements Initializable {
                     content.setActions(closeButton);
                     dialog.show();
 
-                }
-                else if (Integer.parseInt(Total_Seat) <= 0) {
+                } else if (Integer.parseInt(Total_Seat) <= 0) {
 
                     welcome_StackPane.setVisible(true);
                     JFXDialogLayout content = new JFXDialogLayout();
@@ -256,12 +256,12 @@ public class advanced_search_controller implements Initializable {
                         @Override
                         public void handle(ActionEvent event) {
                             try {
-                                String sql = "INSERT INTO `booking`(`Excursion Name`, `Excursion ID`, `Port ID`, `Booked Seat`, `Booked By`, `Status`, `Booked Date`)"+"values(?,?,?,?,?,?,current_timestamp)";
+                                String sql = "INSERT INTO `booking`(`Excursion Name`, `Excursion ID`, `Port ID`, `Booked Seat`, `Booked By`, `Status`, `Booked Date`)" + "values(?,?,?,?,?,?,current_timestamp)";
                                 PreparedStatement mySt = myConn.prepareStatement(sql);
                                 Statement stmt = myConn.createStatement();
-                                mySt.setString(1, Excursionname_box_ID.getValue().toString());
-                                mySt.setString(2, ExcursionID_box_ID.getValue().toString());
-                                mySt.setString(3, PortID_box_ID.getValue().toString());
+                                mySt.setString(1, name);
+                                mySt.setString(2, id);
+                                mySt.setString(3, port);
                                 mySt.setString(4, String.valueOf(noofseat.intValue()));
                                 mySt.setString(5, login_controller.loggedInID);
                                 mySt.setString(6, "Waiting");
@@ -271,8 +271,7 @@ public class advanced_search_controller implements Initializable {
                                 RemainingSeat.setText(Total_Seat);
                                 JFXSnackbar snackbar = new JFXSnackbar(Search_Main_Pane);
                                 snackbar.show("Data Inserted to Waiting List", 2000);
-                            }
-                            catch (SQLException e){
+                            } catch (SQLException e) {
                                 e.printStackTrace();
                             }
                             dialog.close();
@@ -281,13 +280,12 @@ public class advanced_search_controller implements Initializable {
                     });
                     content.setActions(closeButton, okButton);
                     dialog.show();
-                }
-                else if (noofseat.intValue()> Integer.parseInt(Total_Seat)){
-                    int seatSub = Integer.parseInt(Total_Seat)-noofseat.intValue();
+                } else if (noofseat.intValue() > Integer.parseInt(Total_Seat)) {
+                    int seatSub = Integer.parseInt(Total_Seat) - noofseat.intValue();
                     welcome_StackPane.setVisible(true);
                     JFXDialogLayout content = new JFXDialogLayout();
                     content.setHeading(new Text("Booking"));
-                    content.setBody(new Text("Sorry only "+Total_Seat+" seats are available. Do you want to keep rest "+ Math.abs(seatSub)+" seats in waiting list?"));
+                    content.setBody(new Text("Sorry only " + Total_Seat + " seats are available. Do you want to keep rest " + Math.abs(seatSub) + " seats in waiting list?"));
                     JFXDialog dialog = new JFXDialog(welcome_StackPane, content, JFXDialog.DialogTransition.CENTER);
                     JFXButton closeButton = new JFXButton("Close");
                     closeButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -303,24 +301,24 @@ public class advanced_search_controller implements Initializable {
                         @Override
                         public void handle(ActionEvent event) {
                             try {
-                                String sql = "INSERT INTO `booking`(`Excursion Name`, `Excursion ID`, `Port ID`, `Booked Seat`, `Booked By`, `Status`, `Booked Date`)"+"values(?,?,?,?,?,?,current_timestamp)";
-                                String sqlWait = "INSERT INTO `booking`(`Excursion Name`, `Excursion ID`, `Port ID`, `Booked Seat`, `Booked By`, `Status`, `Booked Date`)"+"values(?,?,?,?,?,?,current_timestamp)";
+                                String sql = "INSERT INTO `booking`(`Excursion Name`, `Excursion ID`, `Port ID`, `Booked Seat`, `Booked By`, `Status`, `Booked Date`)" + "values(?,?,?,?,?,?,current_timestamp)";
+                                String sqlWait = "INSERT INTO `booking`(`Excursion Name`, `Excursion ID`, `Port ID`, `Booked Seat`, `Booked By`, `Status`, `Booked Date`)" + "values(?,?,?,?,?,?,current_timestamp)";
                                 PreparedStatement mySt = myConn.prepareStatement(sql);
                                 PreparedStatement myStWait = myConn.prepareStatement(sqlWait);
                                 Statement stmt = myConn.createStatement();
-                                String updateSeat = "UPDATE `excursions` SET `Seat`=`Seat`-'"+Total_Seat+"' WHERE `ID` = '"+id+"'";
+                                String updateSeat = "UPDATE `excursions` SET `Seat`=`Seat`-'" + Total_Seat + "' WHERE `ID` = '" + id + "'";
                                 stmt.executeUpdate(updateSeat);
-                                mySt.setString(1, Excursionname_box_ID.getValue().toString());
-                                mySt.setString(2, ExcursionID_box_ID.getValue().toString());
-                                mySt.setString(3, PortID_box_ID.getValue().toString());
+                                mySt.setString(1, name);
+                                mySt.setString(2, id);
+                                mySt.setString(3, port);
                                 mySt.setString(4, String.valueOf(Total_Seat));
                                 mySt.setString(5, login_controller.loggedInID);
                                 mySt.setString(6, "Booked");
                                 mySt.executeUpdate();
                                 mySt.close();
-                                myStWait.setString(1, Excursionname_box_ID.getValue().toString());
-                                myStWait.setString(2, ExcursionID_box_ID.getValue().toString());
-                                myStWait.setString(3, PortID_box_ID.getValue().toString());
+                                myStWait.setString(1, name);
+                                myStWait.setString(2, id);
+                                myStWait.setString(3, port);
                                 myStWait.setString(4, String.valueOf(Math.abs(seatSub)));
                                 myStWait.setString(5, login_controller.loggedInID);
                                 myStWait.setString(6, "Waiting");
@@ -330,8 +328,7 @@ public class advanced_search_controller implements Initializable {
                                 RemainingSeat.setText(Total_Seat);
                                 JFXSnackbar snackbar = new JFXSnackbar(Search_Main_Pane);
                                 snackbar.show("Data sucessfully Inserted", 2000);
-                            }
-                            catch (SQLException e){
+                            } catch (SQLException e) {
                                 e.printStackTrace();
                             }
                             dialog.close();
@@ -340,9 +337,7 @@ public class advanced_search_controller implements Initializable {
                     });
                     content.setActions(closeButton, okButton);
                     dialog.show();
-                }
-
-                else {
+                } else {
                     welcome_StackPane.setVisible(true);
                     JFXDialogLayout content = new JFXDialogLayout();
                     content.setHeading(new Text("Booking"));
@@ -367,9 +362,9 @@ public class advanced_search_controller implements Initializable {
                                 String updateSeat = "UPDATE `excursions` SET `Seat`=`Seat`-'" + noofseat.intValue() + "' WHERE `ID` = '" + ExcursionID_box_ID.getValue() + "'";
                                 stmt.executeUpdate(updateSeat);
                                 PreparedStatement mySt = myConn.prepareStatement(sql);
-                                mySt.setString(1, Excursionname_box_ID.getValue().toString());
-                                mySt.setString(2, ExcursionID_box_ID.getValue().toString());
-                                mySt.setString(3, PortID_box_ID.getValue().toString());
+                                mySt.setString(1, name);
+                                mySt.setString(2, id);
+                                mySt.setString(3, port);
                                 mySt.setString(4, String.valueOf(noofseat.intValue()));
                                 mySt.setString(5, login_controller.loggedInID);
                                 mySt.setString(6, "Booked");
@@ -379,8 +374,7 @@ public class advanced_search_controller implements Initializable {
                                 RemainingSeat.setText(Total_Seat);
                                 JFXSnackbar snackbar = new JFXSnackbar(Search_Main_Pane);
                                 snackbar.show("Data sucessfully Inserted", 2000);
-                            }
-                            catch (SQLException e){
+                            } catch (SQLException e) {
                                 e.printStackTrace();
                             }
                             dialog.close();
@@ -401,30 +395,28 @@ public class advanced_search_controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
-            Statement statement = myConn.createStatement();
+            Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
             Statement statement1 = myConn.createStatement();
             Statement st_randName = myConn.createStatement();
-            ResultSet booking_ExID_BoSeat_rs = statement.executeQuery("SELECT `Excursion ID`, `Booked Seat`, `Booked By` FROM `booking` WHERE `Status` = \"Waiting\" ");
             ResultSet randomExcursion_RS = statement1.executeQuery("SELECT `ID` FROM `excursions` ORDER BY RAND() LIMIT 2");
-            while (randomExcursion_RS.next()){
+            while (randomExcursion_RS.next()) {
                 Text_Recommended_Place1 = randomExcursion_RS.getString("ID");
 
-                ResultSet randomExcursionName_RS = st_randName.executeQuery("SELECT `Name` FROM `excursions` WHERE `ID` = '"+Text_Recommended_Place1+"'");
-                while (randomExcursionName_RS.next()){
+                ResultSet randomExcursionName_RS = st_randName.executeQuery("SELECT `Name` FROM `excursions` WHERE `ID` = '" + Text_Recommended_Place1 + "'");
+                while (randomExcursionName_RS.next()) {
                     Recommended_Place1.setText(randomExcursionName_RS.getString("Name"));
                 }
 
-                while (randomExcursion_RS.next()){
+                while (randomExcursion_RS.next()) {
                     Text_Recommended_Place2 = randomExcursion_RS.getString("ID");
 
-                    ResultSet randomExcursionName_RS1 = st_randName.executeQuery("SELECT `Name` FROM `excursions` WHERE `ID` = '"+Text_Recommended_Place2+"'");
-                    while (randomExcursionName_RS1.next()){
+                    ResultSet randomExcursionName_RS1 = st_randName.executeQuery("SELECT `Name` FROM `excursions` WHERE `ID` = '" + Text_Recommended_Place2 + "'");
+                    while (randomExcursionName_RS1.next()) {
                         Recommended_Place2.setText(randomExcursionName_RS1.getString("Name"));
                     }
                 }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 

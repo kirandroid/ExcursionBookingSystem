@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Register_Controller implements Initializable{
+public class Register_Controller implements Initializable {
     private String gendertxt;
     @FXML
     private TextField Register_Email, Register_FirstName, Register_LastName, Register_CabinNo;
@@ -52,31 +52,29 @@ public class Register_Controller implements Initializable{
     @FXML
     private AnchorPane Register_Pane;
 
-    public static boolean validateString(String txt){
+    public static boolean validateString(String txt) {
         String regx = "^[a-zA-Z ]+$";
-        Pattern pattern = Pattern.compile(regx,Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile(regx, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(txt);
         return matcher.find();
     }
 
     @FXML
     void termsCondition_Pressed(ActionEvent event) {
-        if (termsCondition.isSelected()){
+        if (termsCondition.isSelected()) {
             Register_Button.setDisable(false);
-        }
-        else {
+        } else {
             Register_Button.setDisable(true);
         }
     }
 
     @FXML
     void Register_FirstName_Typed(KeyEvent event) {
-        if (!validateString(Register_FirstName.getText())){
+        if (!validateString(Register_FirstName.getText())) {
             Error_Email.setVisible(false);
             Error_Password.setVisible(false);
             Error_Name.setVisible(true);
-        }
-        else {
+        } else {
             Error_Email.setVisible(false);
             Error_Password.setVisible(false);
             Error_Name.setVisible(false);
@@ -85,12 +83,11 @@ public class Register_Controller implements Initializable{
 
     @FXML
     void Register_LastName_Typed(KeyEvent event) {
-        if (!validateString(Register_LastName.getText())){
+        if (!validateString(Register_LastName.getText())) {
             Error_Email.setVisible(false);
             Error_Password.setVisible(false);
             Error_Name.setVisible(true);
-        }
-        else {
+        } else {
             Error_Email.setVisible(false);
             Error_Password.setVisible(false);
             Error_Name.setVisible(false);
@@ -100,12 +97,11 @@ public class Register_Controller implements Initializable{
     @FXML
     void Register_Email_Typed(KeyEvent event) {
         EmailValidator validator = EmailValidator.getInstance();
-        if (!validator.isValid(Register_Email.getText())){
+        if (!validator.isValid(Register_Email.getText())) {
             Error_Email.setVisible(true);
             Error_Password.setVisible(false);
             Error_Name.setVisible(false);
-        }
-        else {
+        } else {
             Error_Email.setVisible(false);
             Error_Password.setVisible(false);
             Error_Name.setVisible(false);
@@ -114,12 +110,11 @@ public class Register_Controller implements Initializable{
 
     @FXML
     void Register_Password_Typed(KeyEvent event) {
-        if (Register_Password.getText().length()<8){
+        if (Register_Password.getText().length() < 8) {
             Error_Email.setVisible(false);
             Error_Password.setVisible(true);
             Error_Name.setVisible(false);
-        }
-        else {
+        } else {
             Error_Email.setVisible(false);
             Error_Password.setVisible(false);
             Error_Name.setVisible(false);
@@ -133,9 +128,10 @@ public class Register_Controller implements Initializable{
             gendertxt = checkBoxFemale.getText();
         } else {
             gendertxt = checkBoxUnspecified.getText();
-            }
         }
-    public void Register_Login_Text_Clicked(){
+    }
+
+    public void Register_Login_Text_Clicked() {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
             messageDigest.update(Register_Password.getText().getBytes("UTF-8"), 0, Register_Password.getText().length());
@@ -143,37 +139,33 @@ public class Register_Controller implements Initializable{
 
             EmailValidator validator = EmailValidator.getInstance();
 
-            if(Register_FirstName.getText().isEmpty() || Register_LastName.getText().isEmpty() || Register_Email.getText().isEmpty() || Register_Password.getText().isEmpty() || Register_CabinNo.getText().isEmpty()){
+            if (Register_FirstName.getText().isEmpty() || Register_LastName.getText().isEmpty() || Register_Email.getText().isEmpty() || Register_Password.getText().isEmpty() || Register_CabinNo.getText().isEmpty()) {
                 Error_Empty.setVisible(true);
                 Error_Email.setVisible(false);
                 Error_Password.setVisible(false);
                 Error_Name.setVisible(false);
                 Error_EmailExist.setVisible(false);
-            }
-            else if (!validator.isValid(Register_Email.getText())){
+            } else if (!validator.isValid(Register_Email.getText())) {
                 Error_Email.setVisible(true);
                 Error_Empty.setVisible(false);
                 Error_Password.setVisible(false);
                 Error_Name.setVisible(false);
                 Error_EmailExist.setVisible(false);
-            }
-            else if (!validateString(Register_FirstName.getText()) || !validateString(Register_LastName.getText())){
+            } else if (!validateString(Register_FirstName.getText()) || !validateString(Register_LastName.getText())) {
                 Error_Email.setVisible(false);
                 Error_Empty.setVisible(false);
                 Error_Password.setVisible(false);
                 Error_Name.setVisible(true);
                 Error_EmailExist.setVisible(false);
-            }
-            else if (Register_Password.getText().length()<8){
+            } else if (Register_Password.getText().length() < 8) {
                 Error_Password.setVisible(true);
                 Error_Email.setVisible(false);
                 Error_Empty.setVisible(false);
                 Error_Name.setVisible(false);
                 Error_EmailExist.setVisible(false);
-            }
-            else{
-                Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebs", "root", "");
-                String sql = "INSERT INTO `registration`(`First Name`, `Last Name`, `Email`, `Password`, `Cabin Number`, `Gender`,`Joined Date`,`Role`)"+"values(?,?,?,?,?,?,current_timestamp,'User')";
+            } else {
+                Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/group-8", "root", "");
+                String sql = "INSERT INTO `registration`(`First Name`, `Last Name`, `Email`, `Password`, `Cabin Number`, `Gender`,`Joined Date`,`Role`)" + "values(?,?,?,?,?,?,current_timestamp,'User')";
                 PreparedStatement mySt = myConn.prepareStatement(sql);
                 mySt.setString(1, Register_FirstName.getText());
                 mySt.setString(2, Register_LastName.getText());
@@ -198,25 +190,24 @@ public class Register_Controller implements Initializable{
 
             }
 
-        }
-        catch (MySQLIntegrityConstraintViolationException dup){
+        } catch (MySQLIntegrityConstraintViolationException dup) {
             Error_Password.setVisible(false);
             Error_Email.setVisible(false);
             Error_Empty.setVisible(false);
             Error_Name.setVisible(false);
             Error_EmailExist.setVisible(true);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void Minimize_App(MouseEvent event){
+    private void Minimize_App(MouseEvent event) {
         Main.stage.setIconified(true);
     }
+
     @FXML
-    private void Close_App(MouseEvent event){
+    private void Close_App(MouseEvent event) {
         System.exit(0);
     }
 
