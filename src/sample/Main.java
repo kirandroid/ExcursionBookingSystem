@@ -1,3 +1,4 @@
+//MAIN PROGRAM//
 package sample;
 
 import javafx.application.Application;
@@ -12,7 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("FXML/welcome.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXML/welcome.fxml"));// loading the ewlcome page
         Scene scene = new Scene(root);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
